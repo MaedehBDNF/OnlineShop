@@ -33,6 +33,14 @@ public class Seller extends Account{
         this.authorization = authorization;
     }
 
+    public boolean addNewProduct(Shop shop, String name, double price, int quantity, String category){
+        return shop.addNewProduct(name, price, quantity, category);
+    }
+
+    public boolean increaseNumberOfProduct(Shop shop, int numberOfIncrease, Product product){
+        return shop.increaseNumberOfProduct(numberOfIncrease, product);
+    }
+
     @Override
     public String toString() {
         return "Seller ='" + companyName + '\'';
