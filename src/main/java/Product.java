@@ -5,14 +5,15 @@ public abstract class Product {
     private double price;
     private Seller seller;
     private int quantity;
-    private enum category {ELECTRONICS, CLOTHES, BOOKS, TOOLS, FURNITURE, JEWELRY, KITCHEN_UTENSILS, VEHICLE, STATIONERY, TOYS}
+    private String category; // {ELECTRONICS, CLOTHES, BOOKS, TOOLS, FURNITURE, JEWELRY, KITCHEN_UTENSILS, VEHICLE, STATIONERY, TOYS}
     private ArrayList<String> comments = new ArrayList<String>();
 
-    public Product(String name, double price, Seller seller, int quantity) {
+    public Product(String name, double price, Seller seller, int quantity, String category) {
         this.name = name;
         this.price = price;
         this.seller = seller;
         this.quantity = quantity;
+        this.category = category;
     }
 
     public String getName() {
