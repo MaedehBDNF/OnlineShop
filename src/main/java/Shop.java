@@ -5,10 +5,10 @@ public class Shop {
     private String webAddress;
     private int supportPhone;
     private double totalProfit;
-    private ArrayList<Account> Accounts = new ArrayList<Account>();
-    private ArrayList<Product> Products = new ArrayList<Product>();
-    private ArrayList<Request> PendingRequests = new ArrayList<Request>();
-    private ArrayList<Order> Orders = new ArrayList<Order>();
+    private ArrayList<Account> accounts = new ArrayList<Account>();
+    private ArrayList<Product> products = new ArrayList<Product>();
+    private ArrayList<Request> pendingRequests = new ArrayList<Request>();
+    private ArrayList<Order> orders = new ArrayList<Order>();
     private ArrayList<Admin> adminsOfShop = new ArrayList<Admin>();
 
     public Shop(String name, String webAddress, int supportPhone) {
@@ -51,35 +51,35 @@ public class Shop {
     }
 
     public ArrayList<Account> getAccounts() {
-        return Accounts;
+        return accounts;
     }
 
     public void setAccounts(ArrayList<Account> accounts) {
-        Accounts = accounts;
+        this.accounts = accounts;
     }
 
     public ArrayList<Product> getProducts() {
-        return Products;
+        return products;
     }
 
     public void setProducts(ArrayList<Product> products) {
-        Products = products;
+        this.products = products;
     }
 
     public ArrayList<Request> getPendingRequests() {
-        return PendingRequests;
+        return pendingRequests;
     }
 
     public void setPendingRequests(ArrayList<Request> pendingRequests) {
-        PendingRequests = pendingRequests;
+        this.pendingRequests = pendingRequests;
     }
 
     public ArrayList<Order> getOrders() {
-        return Orders;
+        return orders;
     }
 
     public void setOrders(ArrayList<Order> orders) {
-        Orders = orders;
+        this.orders = orders;
     }
 
     public ArrayList<Admin> getAdminsOfShop() {
