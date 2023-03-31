@@ -5,7 +5,9 @@ public abstract class Product {
     private double price;
     private Seller seller;
     private int quantity;
-    private String category; // {ELECTRONICS, CLOTHES, BOOKS, TOOLS, FURNITURE, JEWELRY, KITCHEN_UTENSILS, VEHICLE, STATIONERY, TOYS}
+    private String category; // {ELECTRONICS= {TV,...}, CLOTHES= {Coat,...}, BOOKS= {Book}, TOOLS= {Hummer,...},
+    // FURNITURE= {Seat,...}, JEWEL= {Ring,...}, KITCHEN_UTENSILS= {Pot,...}, VEHICLE= {Car,...},
+    // STATIONERY= {Pen,...}, TOYS= {Puzzle,...}}
     private ArrayList<String> comments = new ArrayList<String>();
 
     public Product(String name, double price, Seller seller, int quantity, String category) {
