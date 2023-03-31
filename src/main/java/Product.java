@@ -57,4 +57,16 @@ public abstract class Product {
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", price=" + price +
+                ", seller=" + seller.getCompanyName() +
+                ", quantity=" + quantity +
+                ", category='" + category + '\'' +
+                ", comments=" + comments +
+                '}';
+    }
 }
