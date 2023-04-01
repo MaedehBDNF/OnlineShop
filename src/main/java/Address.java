@@ -15,6 +15,108 @@ public class Address {
         this.no = no;
     }
 
+    public Address(String province, String city, String street, String alley, int no) {
+        this.province = province;
+        this.city = city;
+        this.street = street;
+        this.alley = alley;
+        this.no = no;
+    }
+
+    // if address is address of an apartment depending on arguments this constructor will be called
+    public Address(String province, String city, String street, String alley, String building, int floor, int unit, int no) {
+        this.province = province;
+        this.city = city;
+        this.street = street;
+        this.alley = alley;
+        this.building = building;
+        this.floor = floor;
+        this.unit = unit;
+        this.no = no;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getAlley() {
+        return alley;
+    }
+
+    public void setAlley(String alley) {
+        this.alley = alley;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(String building) {
+        this.building = building;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
+
+    public int getUnit() {
+        return unit;
+    }
+
+    public void setUnit(int unit) {
+        this.unit = unit;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
+    public boolean equals(Address address){
+        if (this.province.equalsIgnoreCase(address.getProvince())){
+            if (this.city.equalsIgnoreCase(address.getCity())){
+                if (this.street.equalsIgnoreCase(address.getStreet())){
+                    if (this.alley.equalsIgnoreCase(address.getAlley())){
+                        if (this.building.equalsIgnoreCase(address.getBuilding())){
+                            if (this.floor == address.getFloor()){
+                                if (this.unit == address.getUnit()){
+                                    return this.no == address.getNo();
+                                } else { return false; }
+                            } else { return false; }
+                        } else { return false; }
+                    } else { return false; }
+                } else { return false; }
+            } else { return false; }
+        } else { return false; }
+    }
+
     @Override
     public String toString() {
         if (unit % 10 == 1 ) {
