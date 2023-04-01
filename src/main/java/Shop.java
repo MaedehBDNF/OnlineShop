@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Shop {
     private String name;
@@ -151,4 +153,71 @@ public class Shop {
         }
     }
 
+    public ArrayList<Product> searchProductsByName(String name){
+        Pattern pattern = Pattern.compile(name, Pattern.CASE_INSENSITIVE);
+        Matcher matcher;
+        boolean matcherFind;
+        ArrayList<Product> foundProducts = new ArrayList<>();
+        for (Product prod: products){
+            matcher = pattern.matcher(prod.getName());
+            matcherFind = matcher.find();
+            if (matcherFind){
+                foundProducts.add(prod);
+            }
+        }
+        return foundProducts;
+    }
+
+    public ArrayList<Product> searchProductsByCategory(String category){
+        ArrayList<Product> foundProducts = new ArrayList<>();
+        for (Product prod: products){
+            if (prod.getCategory().equalsIgnoreCase(category)){
+                foundProducts.add(prod);
+            }
+        }
+        return foundProducts;
+    }
+
+    // todo now divide is not fairly
+    public void assignRequestsToAdmins(){
+        int numOfAdmins = adminsOfShop.size();
+        int numOfRequests = pendingRequests.size();
+
+        if (pendingRequests.size() != 0) {
+            for (int i = 0; i < numOfRequests; i++){
+               adminsOfShop.get(i % numOfAdmins).getPendingRequests().add(pendingRequests.get(0));
+               pendingRequests.remove(0);
+            }
+        }
+    }
+
+    public boolean makeOrder(User buyer){
+        if (!buyer.getShoppingCart().isEmpty()){
+            Order order = new Order(buyer);
+            this.pendingRequests.add(order);
+            buyer.getInProcessRequests().add(order);
+            buyer.getShoppingCart().clear(); // clear user cart after register order
+            assignRequestsToAdmins();
+            return true;
+        }
+        return false;
+    }
+
+    public void makeFundRequest(double fund, User requester){
+        FundRequest fundRequest = new FundRequest(fund, requester);
+        this.pendingRequests.add(fundRequest);
+        requester.getInProcessRequests().add(fundRequest);
+        assignRequestsToAdmins();
+    }
+
+    public void makeAuthorizationRequest(Seller seller){
+        AuthorizationRequest authorizationRequest = new AuthorizationRequest(seller);
+        this.pendingRequests.add(authorizationRequest);
+        assignRequestsToAdmins();
+    }
+
+    public void addNewAdmin(String username, String password, String emailAddress){
+        Admin newAdmin = new Admin(username, password, emailAddress);
+        this.adminsOfShop.add(newAdmin);
+    }
 }
