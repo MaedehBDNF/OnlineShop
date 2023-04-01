@@ -32,4 +32,39 @@ public class Wallet {
     public void setTotalCash(double totalCash) {
         this.totalCash = totalCash;
     }
+
+    public void addFund(double fund){
+        this.fund += fund;
+        this.totalCash += fund;
+    }
+
+    public void chargeWallet(double credit){
+        this.credit += credit;
+        this.totalCash += credit;
+    }
+
+    public boolean pay(double price) {
+        if (this.totalCash < price) {
+            return false;
+        } else {
+            this.totalCash -= price;
+            if (this.fund >= price) {
+                this.fund -= price;
+            } else {
+                price -= fund;
+                this.fund = 0;
+                this.credit -= price;
+            }
+            return true;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Wallet{" +
+                "fund=" + fund + "$" +
+                ", credit=" + credit + "$" +
+                ", totalCash=" + totalCash + "$" +
+                '}';
+    }
 }
