@@ -48,4 +48,15 @@ public class Order extends Request{
     public void setListOFSellers(ArrayList<Seller> listOFSellers) {
         this.listOFSellers = listOFSellers;
     }
+
+    @Override
+    public String toString() {
+        return  "Order: " +
+                "id=" + getId() +
+                ", buyer=" + this.buyer.getUsername() +
+                ", isSubmitted=" + isSubmitted() +
+                ", listOfProducts=" + listOfProducts +
+                ", totalPrice=" + totalPrice +
+                ", listOFSellers=" + listOFSellers ;
+    }
 }

@@ -21,4 +21,11 @@ public abstract class Request {
         isSubmitted = submitted;
     }
 
+
+    @Override
+    public String toString() {
+        return "Request: " +
+                "id=" + id +
+                ", isSubmitted=" + isSubmitted ;
+    }
 }

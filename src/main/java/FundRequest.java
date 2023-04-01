@@ -16,6 +16,8 @@ public class FundRequest extends Request{
 
     @Override
     public String toString() {
-        return "The requestedFund is: " + requestedFund + "dollars.";
+        return super.toString() +
+                ", requester=" + requester.getUsername() +
+                ", requestedFund= " + requestedFund + " dollars.";
     }
 }
