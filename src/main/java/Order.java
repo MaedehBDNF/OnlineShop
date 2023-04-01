@@ -1,27 +1,30 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Order extends Request{
-    private ArrayList<Product> listOfProducts = new ArrayList<Product>();
+    private Map<Product, Integer> listOfProducts = new HashMap<Product, Integer>();
     private double totalPrice;
     private User buyer;
     private ArrayList<Seller> listOFSellers = new ArrayList<Seller>();
 
     public Order(User buyer) {
+        super();
         this.buyer = buyer;
-        this.listOfProducts.addAll(buyer.getShoppingCart());
-        for (Product prod : buyer.getShoppingCart()){
-            this.totalPrice += prod.getPrice();
+        this.listOfProducts.putAll(buyer.getShoppingCart());
+        for (Map.Entry<Product, Integer> entry : buyer.getShoppingCart().entrySet()){
+            this.totalPrice += entry.getKey().getPrice();
         }
-        for (Product product: listOfProducts){
-            this.listOFSellers.add(product.getSeller());
+        for (Map.Entry<Product, Integer> entry : buyer.getShoppingCart().entrySet()){
+            this.listOFSellers.add(entry.getKey().getSeller());
         }
     }
 
-    public ArrayList<Product> getListOfProducts() {
+    public Map<Product, Integer> getListOfProducts() {
         return listOfProducts;
     }
 
-    public void setListOfProducts(ArrayList<Product> listOfProducts) {
+    public void setListOfProducts(Map<Product, Integer> listOfProducts) {
         this.listOfProducts = listOfProducts;
     }
 
