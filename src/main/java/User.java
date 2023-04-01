@@ -84,6 +84,87 @@ public class User extends Account{
         this.wallet = wallet;
     }
 
+    public boolean editPhoneNumber(String newPhoneNumber){
+        if (newPhoneNumber.equals(this.phoneNumber)){
+            return false;
+        } else {
+            setPhoneNumber(newPhoneNumber);
+            return true;
+        }
+    }
+
+    public boolean editAddress(Address newAddress){
+        if (newAddress.equals(this.address)){
+            return false;
+        } else {
+            setAddress(newAddress);
+            return true;
+        }
+    }
+
+
+    // todo
+    public boolean editProfileScreen(){
+        return false;
+    }
+
+    // shopping cart related methods
+    public void addProductToCart(Product product, int numOfProduct){
+        this.shoppingCart.put(product, numOfProduct);
+    }
+
+    public boolean removeItemFromShoppingCart(Product product){
+        if (this.shoppingCart.containsKey(product)){
+            this.shoppingCart.remove(product);
+            return true;
+        } else { return false; }
+    }
+
+    public boolean editNumOfProduct(int newNumber, Product product){
+        if (this.shoppingCart.containsKey(product)){
+            int oldNumber = this.shoppingCart.get(product);
+            if (newNumber == 0){
+                removeItemFromShoppingCart(product);
+                return true;
+            }
+            if (oldNumber > newNumber){
+                this.shoppingCart.replace(product, oldNumber, newNumber);
+                return true;
+            } else if (oldNumber < newNumber){
+                int quantity = product.getQuantity();
+                if (quantity >= newNumber){
+                    this.shoppingCart.replace(product, oldNumber, newNumber);
+                    return true;
+                } else { return false;}
+            } else { return true;}
+        } else { return false;}
+    }
+
+    // other methods
+    public void leaveComment(Product product, String comment){
+        product.getComments().add(comment + "\\'based " + this.getUsername() + " opinion.\\'");
+    }
+
+    public void sendFundRequest(Shop shop, double requestedFund){
+        shop.makeFundRequest(requestedFund, this);
+    }
+
+    public void confirmOrder(Shop shop){
+        shop.makeOrder(this);
+    }
+
+    public void getAdminsResponse(Request checkedRequest){
+        if (checkedRequest.isSubmitted()){
+            this.finishedRequests.add(checkedRequest);
+        } else {
+            this.rejectedRequests.add(checkedRequest);
+        }
+    }
+
+    public void chargeWallet(double credit){
+        this.wallet.chargeWallet(credit);
+    }
+
     @Override
     public String toString() {
         return "User{" +
