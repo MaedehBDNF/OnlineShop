@@ -50,12 +50,30 @@ public abstract class Product {
         this.quantity = quantity;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public ArrayList<String> getComments() {
         return comments;
     }
 
     public void setComments(ArrayList<String> comments) {
         this.comments = comments;
+    }
+    
+    public boolean equals(Product product){
+        if (this.name.equalsIgnoreCase(product.getName())){
+            if (this.price == product.getPrice()){
+                if (this.category.equalsIgnoreCase(product.getCategory())){
+                    return this.seller.equals(product.getSeller());
+                } else { return false; }
+            } else { return false; }
+        } else { return false; }
     }
 
     @Override
