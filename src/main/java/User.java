@@ -113,9 +113,13 @@ public class User extends Account{
     }
 
 
-    // todo
-    public boolean editProfileScreen(){
-        return false;
+    public boolean editProfileScreen(String newProfilePhoto){
+        if (this.profileScreen.equals(newProfilePhoto)){
+            return false;
+        } else {
+            setProfileScreen(newProfilePhoto);
+            return true;
+        }
     }
 
     // shopping cart related methods
