@@ -41,39 +41,43 @@ public class Admin extends Account{
 
     public void acceptSeller(AuthorizationRequest request){
         request.getSeller().setAuthorization(true);
+        this.pendingRequests.remove(request);
         this.workHistory.add(request);
     }
 
     public void rejectSeller(AuthorizationRequest request){
         request.getSeller().setAuthorization(false);
+        this.pendingRequests.remove(request);
         this.workHistory.add(request);
     }
 
-    public void giveFundToUser(FundRequest request){
-        request.getRequester().getWallet().addFund(request.getRequestedFund());
-        request.setSubmitted(true);
-        request.getRequester().getAdminsResponse(request);
-        this.workHistory.add(request);
+    public void giveFundToUser(Request fundRequest){
+        ((FundRequest) fundRequest).getRequester().getWallet().addFund(((FundRequest) fundRequest).getRequestedFund());
+        fundRequest.setSubmitted(true);
+        ((FundRequest) fundRequest).getRequester().getAdminsResponse(fundRequest);
+        this.pendingRequests.remove(fundRequest);
+        this.workHistory.add(fundRequest);
     }
 
     public void giveFundToUser(User user, double fund){
         user.getWallet().addFund(fund);
     }
 
-    public void submitOrder(Shop shop, Order order){
-        if (order.getBuyer().getWallet().getTotalCash() >= order.getTotalPrice()){
+    public void submitOrder(Shop shop, Request order){
+        if ((((Order) order).getBuyer().getWallet().getTotalCash() >= ((Order) order).getTotalPrice())){
             // reduce users wallet credit
-            order.getBuyer().getWallet().pay(order.getTotalPrice());
+            ((Order) order).getBuyer().getWallet().pay(((Order) order).getTotalPrice());
             // increase shop profit
             double oldProfitOfShop = shop.getTotalProfit();
-            shop.setTotalProfit(oldProfitOfShop += (order.getTotalPrice()) * 0.1);
+            shop.setTotalProfit(oldProfitOfShop += (((Order) order).getTotalPrice()) * 0.1);
             // increase seller profit
-            for (Map.Entry<Product, Integer> entry: order.getListOfProducts().entrySet()){
+            for (Map.Entry<Product, Integer> entry: ((Order) order).getListOfProducts().entrySet()){
                 entry.getKey().getSeller().getWallet().chargeWallet(entry.getKey().getPrice() * 0.9);
             }
             order.setSubmitted(true);
         }
-        order.getBuyer().getAdminsResponse(order);
+        ((Order) order).getBuyer().getAdminsResponse(order);
+        this.pendingRequests.remove(order);
         this.workHistory.add(order);
     }
 
