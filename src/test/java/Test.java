@@ -1,5 +1,7 @@
+import java.io.IOException;
+
 public class Test {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
         Shop myShop = new Shop("EasyShopping", "www.EasyShopping.com", "09129998877");
         Seller seller1 = new Seller("Ahmadi", "Ahmadi24@098", "AhmadiShop");
         myShop.addNewTV("TV Sx770", 27000000, seller1, 5, "ELECTRONICS",22.5, 1000);
@@ -14,10 +16,11 @@ public class Test {
         Admin admin2 = new Admin("Admin2", "@@@@@@@", "Admin2@gmail.com");
         Address defaultAddress = new Address("Tehran", "Tehran", "Daneshjo", 34);
         Wallet defaultWallet = new Wallet(0);
+        String defaultProfileScreen = "H:\\Uni\\Semesters\\Semester 8\\2- Advanced Programming\\Exercises\\Assignments\\Nourouz Project\\OnlineShop\\defaultProfileScreen.jpg";
         myShop.getAdminsOfShop().add(mainAdmin);
         myShop.getAdminsOfShop().add(admin2);
-        User user1 = new User("user1", "user@@", "user1@gmail.com", "09190897766", defaultAddress, defaultWallet);
-        User user2 = new User("user2", "user89@@", "user12@gmail.com", "09190897755", defaultAddress, defaultWallet);
+        User user1 = new User("user1", "user@@", "user1@gmail.com", "09190897766", defaultAddress, defaultProfileScreen, defaultWallet);
+        User user2 = new User("user2", "user89@@", "user12@gmail.com", "09190897755", defaultAddress, defaultProfileScreen, defaultWallet);
         myShop.makeFundRequest(100, user1);
         myShop.makeFundRequest(200, user1);
         myShop.makeFundRequest(250, user2);
@@ -47,6 +50,10 @@ public class Test {
         System.out.println("workHistory of admin2" + admin2.getWorkHistory());
         System.out.println("finished requests of user1" + user1.getFinishedRequests());
         System.out.println(user1.getWallet());
+
+        // view profilePhoto
+        mainAdmin.viewProfilePhoto(user1);
+
 
 
     }

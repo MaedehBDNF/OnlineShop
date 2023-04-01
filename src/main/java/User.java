@@ -6,18 +6,19 @@ public class User extends Account{
     private String emailAddress;
     private String phoneNumber;
     private Address address;
-    // private profileScreen;
+    private String profileScreen;
     private Wallet wallet;
     private Map<Product, Integer> shoppingCart = new HashMap<>();
     private ArrayList<Request> finishedRequests = new ArrayList<Request>();
     private ArrayList<Request> inProcessRequests = new ArrayList<Request>();
     private ArrayList<Request> rejectedRequests = new ArrayList<Request>();
 
-    public User(String username, String password, String emailAddress, String phoneNumber, Address address, Wallet wallet) {
+    public User(String username, String password, String emailAddress, String phoneNumber, Address address, String profileScreen, Wallet wallet) {
         super(username, password);
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.profileScreen = profileScreen;
         this.wallet = wallet;
     }
 
@@ -43,6 +44,14 @@ public class User extends Account{
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public String getProfileScreen() {
+        return profileScreen;
+    }
+
+    public void setProfileScreen(String profileScreen) {
+        this.profileScreen = profileScreen;
     }
 
     public Map<Product, Integer> getShoppingCart() {

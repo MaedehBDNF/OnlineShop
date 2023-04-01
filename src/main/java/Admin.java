@@ -1,3 +1,9 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -81,5 +87,24 @@ public class Admin extends Account{
         this.workHistory.add(order);
     }
 
-    public void viewProfilePhoto(User user){}
+
+    // body of this method is copied form https://www.delftstack.com/howto/java/display-an-image-in-java/
+    public void viewProfilePhoto(User user) throws IOException {
+        File file = new File(user.getProfileScreen());
+        BufferedImage bufferedImage = ImageIO.read(file);
+
+        ImageIcon imageIcon = new ImageIcon(bufferedImage);
+        JFrame jFrame = new JFrame();
+
+        jFrame.setLayout(new FlowLayout());
+
+        jFrame.setSize(500, 500);
+        JLabel jLabel = new JLabel();
+
+        jLabel.setIcon(imageIcon);
+        jFrame.add(jLabel);
+        jFrame.setVisible(true);
+
+        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 }
