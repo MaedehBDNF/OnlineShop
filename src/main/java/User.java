@@ -1,17 +1,19 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class User extends Account{
     private String emailAddress;
-    private int phoneNumber;
+    private String phoneNumber;
     private Address address;
     // private profileScreen;
     private Wallet wallet;
-    private ArrayList<Product> shoppingCart = new ArrayList<Product>();
+    private Map<Product, Integer> shoppingCart = new HashMap<>();
     private ArrayList<Request> finishedRequests = new ArrayList<Request>();
     private ArrayList<Request> inProcessRequests = new ArrayList<Request>();
     private ArrayList<Request> rejectedRequests = new ArrayList<Request>();
 
-    public User(String username, String password, String emailAddress, int phoneNumber, Address address) {
+    public User(String username, String password, String emailAddress, String phoneNumber, Address address) {
         super(username, password);
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
@@ -26,11 +28,11 @@ public class User extends Account{
         this.emailAddress = emailAddress;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -42,11 +44,11 @@ public class User extends Account{
         this.address = address;
     }
 
-    public ArrayList<Product> getShoppingCart() {
+    public Map<Product, Integer> getShoppingCart() {
         return shoppingCart;
     }
 
-    public void setShoppingCart(ArrayList<Product> shoppingCart) {
+    public void setShoppingCart(Map<Product, Integer> shoppingCart) {
         this.shoppingCart = shoppingCart;
     }
 
