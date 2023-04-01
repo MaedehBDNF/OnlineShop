@@ -1,12 +1,10 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Order extends Request{
     private Map<Product, Integer> listOfProducts = new HashMap<Product, Integer>();
     private double totalPrice;
     private User buyer;
-    private ArrayList<Seller> listOFSellers = new ArrayList<Seller>();
+    private Set<Seller> listOFSellers = new HashSet<Seller>();
 
     public Order(User buyer) {
         super();
@@ -44,11 +42,11 @@ public class Order extends Request{
         this.buyer = buyer;
     }
 
-    public ArrayList<Seller> getListOFSellers() {
+    public Set<Seller> getListOFSellers() {
         return listOFSellers;
     }
 
-    public void setListOFSellers(ArrayList<Seller> listOFSellers) {
+    public void setListOFSellers(Set<Seller> listOFSellers) {
         this.listOFSellers = listOFSellers;
     }
 
