@@ -22,4 +22,22 @@ public abstract class Account {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean editUserName(String newUsername){
+        if (newUsername.equals(this.getUsername())){
+            return false;
+        } else {
+            setUsername(newUsername);
+            return true;
+        }
+    }
+
+    public boolean editPassword(String newPassword){
+        if (newPassword.equals(this.getPassword())){
+            return false;
+        } else {
+            setPassword(newPassword);
+            return true;
+        }
+    }
 }
