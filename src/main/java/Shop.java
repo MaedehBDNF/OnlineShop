@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Shop {
     private String name;
     private String webAddress;
-    private int supportPhone;
+    private String supportPhone;
     private double totalProfit;
     private ArrayList<Account> accounts = new ArrayList<Account>();
     private ArrayList<Product> products = new ArrayList<Product>();
@@ -11,7 +11,7 @@ public class Shop {
     private ArrayList<Order> orders = new ArrayList<Order>();
     private ArrayList<Admin> adminsOfShop = new ArrayList<Admin>();
 
-    public Shop(String name, String webAddress, int supportPhone) {
+    public Shop(String name, String webAddress, String supportPhone) {
         this.name = name;
         this.webAddress = webAddress;
         this.supportPhone = supportPhone;
@@ -34,11 +34,11 @@ public class Shop {
         this.webAddress = webAddress;
     }
 
-    public int getSupportPhone() {
+    public String getSupportPhone() {
         return supportPhone;
     }
 
-    public void setSupportPhone(int supportPhone) {
+    public void setSupportPhone(String supportPhone) {
         this.supportPhone = supportPhone;
     }
 
