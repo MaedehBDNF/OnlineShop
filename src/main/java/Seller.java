@@ -33,6 +33,10 @@ public class Seller extends Account{
         this.authorization = authorization;
     }
 
+    public void sendAuthorizationRequest(Shop shop){
+        shop.makeAuthorizationRequest(this);
+    }
+
     public void addNewTV(Shop shop, String name, double price, int quantity, Seller seller, String category, double inches, int pixels){
         shop.addNewTV(name, price, seller, quantity, category, inches, pixels);
     }
