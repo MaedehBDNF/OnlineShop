@@ -1,9 +1,11 @@
 public class FundRequest extends Request{
     private double requestedFund;
+    private User requester;
 
-    public FundRequest(double requestedFund) {
+    public FundRequest(double requestedFund, User requester) {
         super();
         this.requestedFund = requestedFund;
+        this.requester = requester;
     }
 
     public double getRequestedFund() {
@@ -12,6 +14,14 @@ public class FundRequest extends Request{
 
     public void setRequestedFund(double requestedFund) {
         this.requestedFund = requestedFund;
+    }
+
+    public User getRequester() {
+        return requester;
+    }
+
+    public void setRequester(User requester) {
+        this.requester = requester;
     }
 
     @Override
