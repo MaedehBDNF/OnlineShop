@@ -13,11 +13,12 @@ public class User extends Account{
     private ArrayList<Request> inProcessRequests = new ArrayList<Request>();
     private ArrayList<Request> rejectedRequests = new ArrayList<Request>();
 
-    public User(String username, String password, String emailAddress, String phoneNumber, Address address) {
+    public User(String username, String password, String emailAddress, String phoneNumber, Address address, Wallet wallet) {
         super(username, password);
         this.emailAddress = emailAddress;
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.wallet = wallet;
     }
 
     public String getEmailAddress() {
