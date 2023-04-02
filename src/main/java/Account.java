@@ -1,10 +1,18 @@
+import java.util.UUID;
+
 public abstract class Account {
+    private UUID id;
     private String username;
     private String password;
 
     public Account(String username, String password) {
+        this.id = UUID.randomUUID();
         this.username = username;
         this.password = password;
+    }
+
+    public UUID getId() {
+        return id;
     }
 
     public String getUsername() {
