@@ -19,22 +19,27 @@ public class Main {
                 "   1. LogIn\n" +
                 "   2. SignUp\n" +
                 "   3. Exit ");
-        short choice = in.nextShort();
-        in.nextLine();
-        switch (choice){
-            case 1:
-                loginMenu();
-                break;
-            case 2:
-                signUpMenu();
-                break;
-            case 3:
-                System.exit(0);
-            default:
-                System.out.println("Enter a number in range 1 - 3 ");
-                startMenu();
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            switch (choice){
+                case 1:
+                    loginMenu();
+                    break;
+                case 2:
+                    signUpMenu();
+                    break;
+                case 3:
+                    System.exit(0);
+                default:
+                    System.out.println("Enter a number in range 1 - 3 ");
+                    startMenu();
         }
-
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            startMenu();
+        }
     }
 
     private static void loginMenu(){
@@ -87,6 +92,7 @@ public class Main {
                     signUpMenu();
             }
         } catch (Exception e){
+            in.nextLine();
             System.out.println("You just entered wrong entry. Please try again.");
             signUpMenu();
         }
@@ -268,27 +274,39 @@ public class Main {
     }
 
     private static Wallet getWallet() {
+        double initialCash = 0;
+        short choice = 0;
+        System.out.println("Do you want to charge your wallet now?\n" +
+                "1. Yes\n" +
+                "2. No");
+
         try {
-            System.out.println("Do you want to charge your wallet now?\n" +
-                    "1. Yes\n" +
-                    "2. No");
-            int choice = in.nextInt();
+            choice = in.nextShort();
             in.nextLine();
-            if (choice == 1) {
-                System.out.println("amount: ");
-                double initialCash = in.nextDouble();
-                in.nextLine();
-                return new Wallet(initialCash);
-            } else if (choice == 2) {
-                return new Wallet(0);
-            } else {
-                System.out.println("Enter 1 or 2.");
-                return getWallet();
-            }
         } catch (Exception e) {
-            System.out.println("Something went wrong. Please try again.");
-            return getWallet();
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+            getWallet();
         }
+
+        if (choice == 1) {
+            System.out.println("amount: ");
+            try {
+                initialCash = in.nextDouble();
+                in.nextLine();
+            } catch (Exception e) {
+                in.nextLine();
+                System.out.println("Wrong entry. Please try again.");
+                getWallet();
+            }
+            return new Wallet(initialCash);
+        } else if (choice == 2) {
+            return new Wallet(initialCash);
+        } else {
+            System.out.println("Enter 1 or 2.");
+            getWallet();
+        }
+        return null;
     }
 
     private static String getCompanyName(){
