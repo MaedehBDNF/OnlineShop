@@ -53,4 +53,14 @@ public class Car extends Product{
     public void setNumOfDoors(int numOfDoors) {
         this.numOfDoors = numOfDoors;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " manufacture: " + manufacture +
+                " gear: " + gear +
+                " color: " + color +
+                " number of seats=" + numOfSeats +
+                " number of doors=" + numOfDoors;
+    }
 }

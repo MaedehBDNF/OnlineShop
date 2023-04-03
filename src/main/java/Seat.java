@@ -23,4 +23,12 @@ public class Seat extends Product{
     public void setCommodityOfSeat(String commodityOfSeat) {
         this.commodityOfSeat = commodityOfSeat;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " commodity of structure: " + commodityOfStructure +
+                " commodity of seat: " + commodityOfSeat;
+    }
 }
+

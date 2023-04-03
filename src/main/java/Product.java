@@ -78,13 +78,21 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return "Product{" +
-                "name='" + name + '\'' +
-                ", price=" + price +
-                ", seller=" + seller.getCompanyName() +
-                ", quantity=" + quantity +
-                ", category='" + category + '\'' +
-                ", comments=" + comments +
-                '}';
+        if (this.quantity == 0){
+            return  " name='" + name + "'\n" +
+                    " price=" + price + "\n" +
+                    " seller=" + seller.getCompanyName() + "\n" +
+                    " category='" + category + '\'' + "\n" +
+                    " comments=" + comments + "\n" +
+                    "'OUT OF STOCK'";
+
+        } else {
+            return  " name='" + name + "'\n" +
+                    " price=" + price + "\n" +
+                    " seller=" + seller.getCompanyName() + "\n" +
+                    " quantity=" + quantity + "\n" +
+                    " category='" + category + '\'' + "\n" +
+                    " comments=" + comments;
+        }
     }
 }

@@ -23,4 +23,11 @@ public class Hummer extends Product{
     public void setMass(double mass) {
         this.mass = mass;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " commodity: " + commodity +
+                " mass=" + mass;
+    }
 }

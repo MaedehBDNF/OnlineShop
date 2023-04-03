@@ -23,4 +23,11 @@ public class Ring extends Product{
     public void setCommodity(String commodity) {
         this.commodity = commodity;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " size= " + size +
+                " commodity: " + commodity ;
+    }
 }

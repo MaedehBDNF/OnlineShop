@@ -23,4 +23,11 @@ public class TV extends Product {
     public void setPixels(int pixels) {
         this.pixels = pixels;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " inches=" + inches +
+                " pixels=" + pixels;
+    }
 }

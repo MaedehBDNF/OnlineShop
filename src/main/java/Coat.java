@@ -23,4 +23,11 @@ public class Coat extends Product{
     public void setNumOfPockets(int numOfPockets) {
         this.numOfPockets = numOfPockets;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " size=" + size +
+                " number of pockets=" + numOfPockets;
+    }
 }

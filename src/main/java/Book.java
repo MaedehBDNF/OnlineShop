@@ -33,4 +33,12 @@ public class Book extends Product{
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                " author=" + author +
+                " year of publish=" + yearOfPublish +
+                " ISBN: " + isbn ;
+    }
 }

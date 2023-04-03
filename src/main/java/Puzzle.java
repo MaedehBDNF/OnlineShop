@@ -13,4 +13,10 @@ public class Puzzle extends Product{
     public void setNumOfPieces(int numOfPieces) {
         this.numOfPieces = numOfPieces;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "number of pieces=" + numOfPieces;
+    }
 }
