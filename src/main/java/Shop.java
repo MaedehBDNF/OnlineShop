@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Shop {
+    private Account currentUser;
     private String name;
     private String webAddress;
     private String supportPhone;
@@ -19,6 +21,14 @@ public class Shop {
         this.webAddress = webAddress;
         this.supportPhone = supportPhone;
         this.totalProfit = 0;
+    }
+
+    public Account getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 
     public String getName() {
@@ -91,6 +101,59 @@ public class Shop {
 
     public void setAdminsOfShop(ArrayList<Admin> adminsOfShop) {
         this.adminsOfShop = adminsOfShop;
+    }
+
+    public Account findAccount(String username) {
+        for (Account account: this.accounts) {
+            if (account.getUsername().equals(username)) {
+                return account;
+            }
+        }
+        return null;
+    }
+
+    private int findIndexOfAccount(UUID id){
+        for (int i = 0; i < this.accounts.size(); i++){
+            if (this.accounts.get(i).getId().equals(id)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // this method exists because I didn't use database. It calls when every changes happen.
+    public void updateAccount(Account updatedAccount) {
+        int index = findIndexOfAccount(updatedAccount.getId());
+        this.accounts.set(index, updatedAccount);
+    }
+
+    public void adminSignUp(String username, String password, String emailAddress){
+        this.currentUser = new Admin(username, password, emailAddress);
+        this.accounts.add(this.currentUser);
+        this.adminsOfShop.add((Admin) this.currentUser);
+    }
+
+    public void sellerSignUp(String username, String password, String companyName){
+        this.currentUser = new Seller(username, password, companyName);
+        this.accounts.add(this.currentUser);
+    }
+
+    public void userSignUp(String username, String password, String emailAddress, String phoneNumber, Address address, String profileScreen, Wallet wallet){
+        this.currentUser = new User(username, password, emailAddress, phoneNumber, address, profileScreen, wallet);
+        this.accounts.add(this.currentUser);
+    }
+
+    public boolean login(String username, String password) {
+        Account foundAccount = findAccount(username);
+        if (foundAccount.getPassword().equals(password)) {
+            this.currentUser = foundAccount;
+            return true;
+        }
+        return false;
+    }
+
+    public void logout() {
+        this.currentUser = null;
     }
 
     public void addNewTV(String name, double price, Seller seller, int quantity, String category, double inches, int pixels){
