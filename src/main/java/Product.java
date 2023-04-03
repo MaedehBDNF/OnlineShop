@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.UUID;
 
 public abstract class Product {
+    private UUID uuid;
     private String name;
     private double price;
     private Seller seller;
@@ -11,11 +13,16 @@ public abstract class Product {
     private ArrayList<String> comments = new ArrayList<String>();
 
     public Product(String name, double price, Seller seller, int quantity, String category) {
+        this.uuid = UUID.randomUUID();
         this.name = name;
         this.price = price;
         this.seller = seller;
         this.quantity = quantity;
         this.category = category;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
     public String getName() {
