@@ -116,6 +116,5 @@ public class Admin extends Account{
         jFrame.add(jLabel);
         jFrame.setVisible(true);
 
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
