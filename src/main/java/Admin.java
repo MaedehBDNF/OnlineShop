@@ -88,6 +88,11 @@ public class Admin extends Account{
             for (Map.Entry<Product, Integer> entry: ((Order) order).getListOfProducts().entrySet()){
                 entry.getKey().getSeller().getWallet().chargeWallet(entry.getKey().getPrice() * 0.9);
             }
+            // decrease quantity of product in store
+            for (Map.Entry<Product, Integer> entry: ((Order) order).getListOfProducts().entrySet()){
+                entry.getKey().setQuantity(entry.getKey().getQuantity() - entry.getValue());
+                shop.updateProduct(entry.getKey());
+            }
             order.setSubmitted(true);
             shop.getOrders().add((Order) order);
         }

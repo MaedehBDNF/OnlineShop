@@ -123,31 +123,36 @@ public class User extends Account{
     }
 
     // shopping cart related methods
-    public void addProductToCart(Product product, int numOfProduct){
+    public void addProductToCart(Shop shop,Product product, int numOfProduct){
         this.shoppingCart.put(product, numOfProduct);
+        shop.updateAccount(this);
     }
 
-    public boolean removeItemFromShoppingCart(Product product){
+    public boolean removeItemFromShoppingCart(Shop shop,Product product){
         if (this.shoppingCart.containsKey(product)){
             this.shoppingCart.remove(product);
+            shop.updateAccount(this);
             return true;
         } else { return false; }
     }
 
-    public boolean editNumOfProduct(int newNumber, Product product){
+    public boolean editNumOfProduct(Shop shop, int newNumber, Product product){
         if (this.shoppingCart.containsKey(product)){
             int oldNumber = this.shoppingCart.get(product);
             if (newNumber == 0){
-                removeItemFromShoppingCart(product);
+                removeItemFromShoppingCart(shop, product);
+                shop.updateAccount(this);
                 return true;
             }
             if (oldNumber > newNumber){
                 this.shoppingCart.replace(product, oldNumber, newNumber);
+                shop.updateAccount(this);
                 return true;
             } else if (oldNumber < newNumber){
                 int quantity = product.getQuantity();
                 if (quantity >= newNumber){
                     this.shoppingCart.replace(product, oldNumber, newNumber);
+                    shop.updateAccount(this);
                     return true;
                 } else { return false;}
             } else { return true;}
@@ -155,8 +160,9 @@ public class User extends Account{
     }
 
     // other methods
-    public void leaveComment(Product product, String comment){
+    public void leaveComment(Shop shop, Product product, String comment){
         product.getComments().add(comment + "\\'based " + this.getUsername() + " opinion.\\'");
+        shop.updateProduct(product);
     }
 
     public void sendFundRequest(Shop shop, double requestedFund){

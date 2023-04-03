@@ -282,6 +282,16 @@ public class Shop {
         assignRequestsToAdmins();
     }
 
+    public void updateProduct(Product updatedProduct){
+        int index;
+        for (int i =0; i < products.size(); i++) {
+            if (products.get(i).getUuid().equals(updatedProduct.getUuid())) {
+                index = i;
+                this.products.set(index, updatedProduct);
+            }
+        }
+    }
+
     public void addNewAdmin(String username, String password, String emailAddress){
         Admin newAdmin = new Admin(username, password, emailAddress);
         this.adminsOfShop.add(newAdmin);
