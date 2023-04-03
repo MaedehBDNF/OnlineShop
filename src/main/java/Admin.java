@@ -45,28 +45,36 @@ public class Admin extends Account{
         shop.addNewAdmin(username, password, emailAddress);
     }
 
-    public void acceptSeller(AuthorizationRequest request){
+    public void acceptSeller(Shop shop, AuthorizationRequest request){
         request.getSeller().setAuthorization(true);
         this.pendingRequests.remove(request);
         this.workHistory.add(request);
+        shop.updateAccount(request.getSeller());
+        shop.updateAccount(this);
     }
 
-    public void rejectSeller(AuthorizationRequest request){
+    public void rejectSeller(Shop shop, AuthorizationRequest request){
         request.getSeller().setAuthorization(false);
         this.pendingRequests.remove(request);
         this.workHistory.add(request);
+        shop.updateAccount(request.getSeller());
+        shop.updateAccount(this);
     }
 
-    public void giveFundToUser(Request fundRequest){
+    public void giveFundToUser(Shop shop, Request fundRequest){
         ((FundRequest) fundRequest).getRequester().getWallet().addFund(((FundRequest) fundRequest).getRequestedFund());
         fundRequest.setSubmitted(true);
         ((FundRequest) fundRequest).getRequester().getAdminsResponse(fundRequest);
         this.pendingRequests.remove(fundRequest);
         this.workHistory.add(fundRequest);
+        shop.updateAccount(((FundRequest) fundRequest).getRequester());
+        shop.updateAccount(this);
     }
 
-    public void giveFundToUser(User user, double fund){
+    public void giveFundToUser(Shop shop, User user, double fund){
         user.getWallet().addFund(fund);
+        shop.updateAccount(user);
+        shop.updateAccount(this);
     }
 
     public void submitOrder(Shop shop, Request order){
@@ -81,10 +89,13 @@ public class Admin extends Account{
                 entry.getKey().getSeller().getWallet().chargeWallet(entry.getKey().getPrice() * 0.9);
             }
             order.setSubmitted(true);
+            shop.getOrders().add((Order) order);
         }
         ((Order) order).getBuyer().getAdminsResponse(order);
         this.pendingRequests.remove(order);
         this.workHistory.add(order);
+        shop.updateAccount(((Order) order).getBuyer());
+        shop.updateAccount(this);
     }
 
 

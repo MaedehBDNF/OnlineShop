@@ -258,6 +258,7 @@ public class Shop {
             index++;
             buyer.getInProcessRequests().add(order);
             buyer.getShoppingCart().clear(); // clear user cart after register order
+            updateAccount(buyer);
             assignRequestsToAdmins();
             return true;
         }
@@ -269,6 +270,7 @@ public class Shop {
         this.pendingRequests.add(fundRequest);
         index++;
         requester.getInProcessRequests().add(fundRequest);
+        updateAccount(requester);
         assignRequestsToAdmins();
     }
 
@@ -276,6 +278,7 @@ public class Shop {
         AuthorizationRequest authorizationRequest = new AuthorizationRequest(seller);
         this.pendingRequests.add(authorizationRequest);
         index++;
+        updateAccount(seller);
         assignRequestsToAdmins();
     }
 
