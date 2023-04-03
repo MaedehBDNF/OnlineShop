@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -148,7 +149,59 @@ public class Main {
     }
 
     private static void userMenu() {
-
+        System.out.println("What do you want to do? \n" +
+                "   1. Search products \n" +
+                "   2. Charge wallet \n" +
+                "   3. View shopping cart \n" +
+                "   4. Send fund request \n" +
+                "   5. Order tracking \n" +
+                "   6. View pending requests \n" +
+                "   7. View successful requests\n" +
+                "   8. View rejected Requests\n " +
+                "   9. Edit information \n" +
+                "   10. Logout");
+        try{
+            short choice = in.nextShort();
+            in.nextLine();
+            if (1 <= choice && choice <= 8) {
+                switch (choice) {
+                    case 1:
+                        searchMenu();
+                        break;
+                    case 2:
+                        //chargeWallet();
+                        break;
+                    case 3:
+                        //viewShoppingCartMenu();
+                        break;
+                    case 4:
+                        //sendFundRequest();
+                        break;
+                    case 5:
+                        //orderTracking();
+                        break;
+                    case 6:
+                        break;
+                    case 7:
+                        break;
+                    case 8:
+                        break;
+                    case 9:
+                        //editInformationMenu();
+                        break;
+                    case 10:
+                        mainShop.logout();
+                        startMenu();
+                        break;
+                }
+            } else {
+                System.out.println("Enter a number in range 1 - 8");
+                userMenu();
+            }
+        } catch (Exception e) {
+            System.out.println("You just entered wrong entry. Please try again.");
+            userMenu();
+        }
     }
 
     private static void sellerMenu() {
@@ -316,5 +369,156 @@ public class Main {
             companyName = in.nextLine();
         } while (companyName.equals(""));
         return companyName;
+    }
+
+    private static void searchMenu(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        System.out.println("1. Search by category\n" +
+                "2. Search by name of product");
+
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            if (choice == 1){
+                searchByCategoryMenu();
+            } else if (choice == 2){
+                searchByNameMenu();
+            } else {
+                System.out.println("Enter 1 or 2.");
+                searchMenu();
+            }
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            searchMenu();
+        }
+    }
+
+    private static void searchByCategoryMenu(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            searchMenu();
+        }
+
+        System.out.println("Available categories are:\n" +
+                "1. ELECTRONICS includes TV,...\n" +
+                "2. CLOTHES includes Coat,...\n" +
+                "3. BOOKS\n" +
+                "4. TOOLS includes Hummer,...\n" +
+                "5. FURNITURE includes Seat,...\n" +
+                "6. JEWEL includes Ring,...\n" +
+                "7. KITCHEN_UTENSILS includes Pot,...\n" +
+                "8. VEHICLE includes Car,...\n" +
+                "9. STATIONERY includes Pen,..." +
+                "10. TOYS includes Puzzle,...");
+
+        System.out.println("Select one of above categories: ");
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            switch (choice){
+                case 1:
+                    selectProduct(mainShop.searchProductsByCategory("ELECTRONICS"));
+                case 2:
+                    selectProduct(mainShop.searchProductsByCategory("CLOTHES"));
+                case 3:
+                    selectProduct(mainShop.searchProductsByCategory("BOOKS"));
+                case 4:
+                    selectProduct(mainShop.searchProductsByCategory("TOOLS"));
+                case 5:
+                    selectProduct(mainShop.searchProductsByCategory("FURNITURE"));
+                case 6:
+                    selectProduct(mainShop.searchProductsByCategory("JEWEL"));
+                case 7:
+                    selectProduct(mainShop.searchProductsByCategory("KITCHEN_UTENSILS"));
+                case 8:
+                    selectProduct(mainShop.searchProductsByCategory("VEHICLE"));
+                case 9:
+                    selectProduct(mainShop.searchProductsByCategory("STATIONERY"));
+                case 10:
+                    selectProduct(mainShop.searchProductsByCategory("TOYS"));
+            }
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            searchByCategoryMenu();
+        }
+    }
+
+    private static void searchByNameMenu(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            searchMenu();
+        }
+
+        System.out.println("Enter the name of product: ");
+        String name = in.nextLine();
+        ArrayList<Product> foundProducts = mainShop.searchProductsByName(name);
+
+        if (foundProducts.isEmpty()){
+            System.out.println("Sorry this product doesn't exist!");
+            searchByNameMenu();
+        } else {
+            selectProduct(foundProducts);
+        }
+    }
+
+    private static void selectProduct(ArrayList<Product> products){
+        System.out.println("\"Found Products\"\n");
+        for (int i = 0; i < products.size(); i++){
+            System.out.println(i + 1 + ") " + products.get(i) + "\n\n");
+        }
+
+        System.out.println("Select one of above products or 0 for back to menu. Just enter its number: ");
+        try{
+            int choice = in.nextInt();
+            in.nextLine();
+            if (choice == 0){
+                userMenu();
+            } else if (1 <= choice && choice <= products.size()){
+                productMenu(products.get(choice - 1));
+            } else {
+                System.out.println("Number was not in range!");
+                selectProduct(products);
+            }
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            selectProduct(products);
+        }
+    }
+
+    private static void productMenu(Product product){
+        System.out.println("Selected Product:\n" +
+                product);
+        System.out.println("What do you want to do?\n" +
+                "1. Add this product to your shopping cart\n" +
+                "2. Leave comment" +
+                "0. Back to menu");
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            if (choice == 0){
+                userMenu();
+            } else if (choice == 1) {
+                ((User) mainShop.getCurrentUser()).addProductToCart(mainShop, product,1);
+                System.out.println("Product just added to your cart successfully.");
+            } else if (choice == 2) {
+                System.out.println("Write your comment:");
+                String comment = in.nextLine();
+                ((User) mainShop.getCurrentUser()).leaveComment(mainShop, product, comment);
+            } else {
+                System.out.println("Enter a number in range 0 - 2");
+                productMenu(product);
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            productMenu(product);
+        }
     }
 }
