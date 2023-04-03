@@ -1,14 +1,18 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class Order extends Request{
     private Map<Product, Integer> listOfProducts = new HashMap<Product, Integer>();
     private double totalPrice;
+    private LocalDateTime date;
     private User buyer;
     private Set<Seller> listOFSellers = new HashSet<Seller>();
 
     public Order(User buyer) {
         super();
         this.buyer = buyer;
+        this.date = java.time.LocalDateTime.now();
         this.listOfProducts.putAll(buyer.getShoppingCart());
         for (Map.Entry<Product, Integer> entry : buyer.getShoppingCart().entrySet()){
             this.totalPrice += entry.getKey().getPrice();
@@ -53,11 +57,12 @@ public class Order extends Request{
     @Override
     public String toString() {
         return  "Order: " +
-                "id=" + getId() +
-                ", buyer=" + this.buyer.getUsername() +
-                ", isSubmitted=" + isSubmitted() +
-                ", listOfProducts=" + listOfProducts +
-                ", totalPrice=" + totalPrice +
-                ", listOFSellers=" + listOFSellers ;
+                "id= " + getId() +
+                ",date= " + DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(this.date) +
+                ", buyer= " + this.buyer.getUsername() +
+                ", isSubmitted= " + isSubmitted() +
+                ", listOfProducts= " + listOfProducts +
+                ", totalPrice= " + totalPrice +
+                ", listOFSellers= " + listOFSellers;
     }
 }
