@@ -251,7 +251,7 @@ public class Shop {
         }
     }
 
-    public boolean makeOrder(User buyer){
+    public Order makeOrder(User buyer){
         if (!buyer.getShoppingCart().isEmpty()){
             Order order = new Order(buyer);
             this.pendingRequests.add(order);
@@ -260,18 +260,19 @@ public class Shop {
             buyer.getShoppingCart().clear(); // clear user cart after register order
             updateAccount(buyer);
             assignRequestsToAdmins();
-            return true;
+            return order;
         }
-        return false;
+        return null;
     }
 
-    public void makeFundRequest(double fund, User requester){
+    public FundRequest makeFundRequest(double fund, User requester){
         FundRequest fundRequest = new FundRequest(fund, requester);
         this.pendingRequests.add(fundRequest);
         index++;
         requester.getInProcessRequests().add(fundRequest);
         updateAccount(requester);
         assignRequestsToAdmins();
+        return fundRequest;
     }
 
     public void makeAuthorizationRequest(Seller seller){
