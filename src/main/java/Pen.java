@@ -37,8 +37,8 @@ public class Pen extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " manufacture: '" + manufacture + '\'' +
-                " thickness=" + thickness +
+                " manufacture: '" + manufacture + '\'' + "\n" +
+                " thickness=" + thickness + "\n" +
                 " color: " + color;
     }
 }

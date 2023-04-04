@@ -24,8 +24,8 @@ public abstract class Request {
 
     @Override
     public String toString() {
-        return "Request: " +
-                "id=" + id +
-                ", isSubmitted=" + isSubmitted ;
+        return "Request: " + "\n" +
+                " code= " + id + "\n" +
+                ", isSubmitted=" + isSubmitted +  "\n";
     }
 }

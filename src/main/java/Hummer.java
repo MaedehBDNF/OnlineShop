@@ -27,7 +27,7 @@ public class Hummer extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " commodity: " + commodity +
+                " commodity: " + commodity + "\n" +
                 " mass=" + mass;
     }
 }

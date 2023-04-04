@@ -27,7 +27,7 @@ public class TV extends Product {
     @Override
     public String toString() {
         return super.toString() +
-                " inches=" + inches +
+                " inches=" + inches + "\n" +
                 " pixels=" + pixels;
     }
 }

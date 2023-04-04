@@ -27,7 +27,7 @@ public class Pot extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " commodity: " + commodity +
+                " commodity: " + commodity + "\n" +
                 " volume=" + volume;
     }
 }

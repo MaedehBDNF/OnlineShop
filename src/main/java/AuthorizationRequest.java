@@ -15,6 +15,7 @@ public class AuthorizationRequest extends Request{
 
     @Override
     public String toString() {
-        return "AuthorizationRequest for " + this.seller.getUsername();
+        return super.toString() +
+                "AuthorizationRequest for " + this.seller.getUsername();
     }
 }

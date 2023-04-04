@@ -27,7 +27,7 @@ public class Ring extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " size= " + size +
+                " size= " + size + "\n" +
                 " commodity: " + commodity ;
     }
 }

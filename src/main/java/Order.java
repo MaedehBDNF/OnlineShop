@@ -56,13 +56,12 @@ public class Order extends Request{
 
     @Override
     public String toString() {
-        return  "Order: " +
-                "id= " + getId() +
-                ",date= " + DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(this.date) +
-                ", buyer= " + this.buyer.getUsername() +
-                ", isSubmitted= " + isSubmitted() +
-                ", listOfProducts= " + listOfProducts +
-                ", totalPrice= " + totalPrice +
-                ", listOFSellers= " + listOFSellers;
+        return  "Order: " + "\n" +
+                " date= " + DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss").format(this.date) + "\n" +
+                " buyer= " + this.buyer.getUsername() + "\n" +
+                " isSubmitted= " + isSubmitted() + "\n" +
+                " listOfProducts= " + listOfProducts + "\n" +
+                " totalPrice= " + totalPrice + "\n" +
+                " listOFSellers= " + listOFSellers;
     }
 }

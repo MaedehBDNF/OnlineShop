@@ -27,7 +27,7 @@ public class Coat extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " size=" + size +
+                " size=" + size + "\n" +
                 " number of pockets=" + numOfPockets;
     }
 }

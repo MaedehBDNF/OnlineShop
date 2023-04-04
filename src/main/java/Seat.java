@@ -27,7 +27,7 @@ public class Seat extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " commodity of structure: " + commodityOfStructure +
+                " commodity of structure: " + commodityOfStructure + "\n" +
                 " commodity of seat: " + commodityOfSeat;
     }
 }

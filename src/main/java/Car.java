@@ -57,10 +57,10 @@ public class Car extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                " manufacture: " + manufacture +
-                " gear: " + gear +
-                " color: " + color +
-                " number of seats=" + numOfSeats +
+                " manufacture: " + manufacture + "\n" +
+                " gear: " + gear + "\n" +
+                " color: " + color + "\n" +
+                " number of seats=" + numOfSeats + "\n" +
                 " number of doors=" + numOfDoors;
     }
 }
