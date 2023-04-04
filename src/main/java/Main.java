@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 public class Main {
@@ -154,7 +156,7 @@ public class Main {
                 "   2. Charge wallet \n" +
                 "   3. View shopping cart \n" +
                 "   4. Send fund request \n" +
-                "   5. Order tracking \n" +
+                "   5. Request tracking \n" +
                 "   6. View pending requests \n" +
                 "   7. View successful requests\n" +
                 "   8. View rejected Requests\n " +
@@ -169,22 +171,28 @@ public class Main {
                         searchMenu();
                         break;
                     case 2:
-                        //chargeWallet();
+                        chargeWallet();
                         break;
                     case 3:
-                        //viewShoppingCartMenu();
+                        viewShoppingCartMenu();
                         break;
                     case 4:
-                        //sendFundRequest();
+                        sendFundRequest();
                         break;
                     case 5:
-                        //orderTracking();
+                        requestTracking();
                         break;
                     case 6:
+                        System.out.println("Pending requests:");
+                        presentRequestsList(((User) mainShop.getCurrentUser()).getInProcessRequests());
                         break;
                     case 7:
+                        System.out.println("Successful requests:");
+                        presentRequestsList(((User) mainShop.getCurrentUser()).getFinishedRequests());
                         break;
                     case 8:
+                        System.out.println("Rejected requests:");
+                        presentRequestsList(((User) mainShop.getCurrentUser()).getRejectedRequests());
                         break;
                     case 9:
                         //editInformationMenu();
@@ -371,6 +379,7 @@ public class Main {
         return companyName;
     }
 
+    // case 1 of user menu
     private static void searchMenu(){
         System.out.print("Enter '0' for back and just enter for continue: ");
         if (in.nextLine().equals("0")) {
@@ -521,4 +530,203 @@ public class Main {
             productMenu(product);
         }
     }
+
+    // case 2 of user menu
+    private static void chargeWallet(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        System.out.println("How much do you want to charge your wallet? ");
+        try{
+            double credit = in.nextDouble();
+            in.nextLine();
+            ((User) mainShop.getCurrentUser()).chargeWallet(credit);
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            chargeWallet();
+        }
+    }
+
+    // case 3 of user menu
+    private static void viewShoppingCartMenu(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        Map<Product, Integer> shoppingCart = ((User) mainShop.getCurrentUser()).getShoppingCart();
+
+        System.out.println("Shopping Cart:");
+        int counter = 1;
+        for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()){
+            System.out.println(counter + ") " + "Product: " + entry.getKey().getName() + "quantity: " + entry.getValue() + "\n");
+            counter++;
+        }
+
+        System.out.println("What do you want to do?\n" +
+                "1. edit shopping cart" +
+                "2. register this order");
+
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            if (choice == 1){
+                editShoppingCartMenu();
+            } else if (choice == 2){
+                Order order = mainShop.makeOrder((User) mainShop.getCurrentUser());
+                if (order != null){
+                    System.out.println("Your order confirmed successfully.\n" +
+                            "Save this code for order tracking: " + order.getId());
+                } else {
+                    System.out.println("Your shopping cart was empty.");
+                    userMenu();
+                }
+            } else {
+                System.out.println("Enter 1 or 2");
+            }
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            viewShoppingCartMenu();
+        }
+    }
+
+    private static void editShoppingCartMenu(){
+        User currentUser = (User) mainShop.getCurrentUser();
+        Product product = selectProductInCart();
+        if (product != null){
+            System.out.println("What do you want todo with this product?" +
+                    "1. remove this item" +
+                    "2. edit quantity of an item");
+
+            try{
+                short choice = in.nextShort();
+                in.nextLine();
+                if (choice == 1){
+                    currentUser.removeItemFromShoppingCart(mainShop,product);
+                    System.out.println("Item deleted successfully.");
+                } else if (choice == 2){
+                    System.out.println("Enter new quantity: ");
+                    int newQuantity = in.nextInt();
+                    in.nextLine();
+                    if (currentUser.editNumOfProduct(mainShop, newQuantity, product)){
+                        System.out.println("Quantity edited successfully.");
+                    } else {
+                        System.out.println("There is no enough of this product in store.");
+                        System.out.println("There is just "+ product.getQuantity()+" of this product.");
+                        System.out.println("Try again if you want.");
+                        editShoppingCartMenu();
+                    }
+                }
+            } catch (Exception e) {
+                in.nextLine();
+                System.out.println("You just entered wrong entry. Please try again.");
+                editShoppingCartMenu();
+            }
+        } else {
+            System.out.println("Number was not in range. Please try again.");
+            editShoppingCartMenu();
+        }
+
+    }
+
+    private static Product selectProductInCart(){
+        System.out.println("For edit cart first select that item.\n" +
+                "Enter number of product in above list: ");
+
+        int number = in.nextInt();
+
+        Map<Product, Integer> shoppingCart = ((User) mainShop.getCurrentUser()).getShoppingCart();
+
+        System.out.println("Shopping Cart:");
+        int counter = 1;
+        for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()){
+            if (counter == number){
+                return entry.getKey();
+            }
+            counter++;
+        }
+        return null;
+    }
+
+    // case 4 of user menu
+    private static void sendFundRequest(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        System.out.println("How much fund do you want?");
+        try {
+            double fund = in.nextDouble();
+            in.nextLine();
+            FundRequest fundRequest = mainShop.makeFundRequest(fund, (User) mainShop.getCurrentUser());
+            System.out.println("Your request sent successfully.\n" +
+                    "Save this code for request tracking: " + fundRequest.getId());
+
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            sendFundRequest();
+        }
+    }
+
+    // case 5 of user menu
+    private static void requestTracking(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User currentUser = (User) mainShop.getCurrentUser();
+        System.out.println("Enter the code of request: ");
+        UUID id = UUID.fromString(in.nextLine());
+
+        Request request;
+        request = searchRequest(currentUser.getInProcessRequests(), id);
+        if (request != null){
+            System.out.println(request);
+            System.out.println("This request doesn't checked yet." );
+        }
+        request = searchRequest(currentUser.getFinishedRequests(), id);
+        if (request != null){
+            System.out.println(request);
+            System.out.println("This request has finished.");
+        }
+        request = searchRequest(currentUser.getRejectedRequests(), id);
+        if (request != null){
+            System.out.println(request);
+            if (request.getClass().getSimpleName().equals("Order")){
+                System.out.println("This request was rejected because your wallet didn't had enough money.");
+            }
+            if (request.getClass().getSimpleName().equals("FundRequest")){
+                System.out.println("This request was rejected.");
+            }
+        }
+
+
+    }
+
+    private static Request searchRequest(ArrayList<Request> listOfRequests, UUID id){
+        for (Request req: listOfRequests){
+            if (id.equals(req.getId())){
+                return req;
+            }
+        }
+        return null;
+    }
+
+    // case 6,7 and 8 of user menu
+    private static void presentRequestsList(ArrayList<Request> requests){
+        int counter = 1;
+        for (Request request: requests){
+            System.out.println(counter +") " + request);
+            counter++;
+        }
+    }
+
+
 }
