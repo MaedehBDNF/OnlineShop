@@ -128,12 +128,9 @@ public class User extends Account{
         shop.updateAccount(this);
     }
 
-    public boolean removeItemFromShoppingCart(Shop shop,Product product){
-        if (this.shoppingCart.containsKey(product)){
-            this.shoppingCart.remove(product);
-            shop.updateAccount(this);
-            return true;
-        } else { return false; }
+    public void removeItemFromShoppingCart(Shop shop,Product product){
+        this.shoppingCart.remove(product);
+        shop.updateAccount(this);
     }
 
     public boolean editNumOfProduct(Shop shop, int newNumber, Product product){
