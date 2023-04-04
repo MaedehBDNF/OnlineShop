@@ -166,10 +166,6 @@ public class User extends Account{
         shop.makeFundRequest(requestedFund, this);
     }
 
-    public void confirmOrder(Shop shop){
-        shop.makeOrder(this);
-    }
-
     public void getAdminsResponse(Request checkedRequest){
         if (checkedRequest.isSubmitted()){
             this.finishedRequests.add(checkedRequest);
