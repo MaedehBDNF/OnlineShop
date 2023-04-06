@@ -153,8 +153,12 @@ public class Main {
     private static void userMenu() {
         System.out.println("What do you want to do? \n" +
                 "   1. Search products \n" +
+                "       - add to shopping cart \n" +
+                "       - leave comment \n" +
                 "   2. Charge wallet \n" +
                 "   3. View shopping cart \n" +
+                "       - edit shopping cart \n" +
+                "       - submit order \n" +
                 "   4. Send fund request \n" +
                 "   5. Request tracking \n" +
                 "   6. View pending requests \n" +
@@ -168,7 +172,7 @@ public class Main {
             if (1 <= choice && choice <= 8) {
                 switch (choice) {
                     case 1:
-                        searchMenu();
+                        searchProductMenu();
                         break;
                     case 2:
                         chargeWallet();
@@ -380,7 +384,7 @@ public class Main {
     }
 
     // case 1 of user menu
-    private static void searchMenu(){
+    private static void searchProductMenu(){
         System.out.print("Enter '0' for back and just enter for continue: ");
         if (in.nextLine().equals("0")) {
             userMenu();
@@ -398,19 +402,19 @@ public class Main {
                 searchByNameMenu();
             } else {
                 System.out.println("Enter 1 or 2.");
-                searchMenu();
+                searchProductMenu();
             }
         } catch (Exception e){
             in.nextLine();
             System.out.println("You just entered wrong entry. Please try again.");
-            searchMenu();
+            searchProductMenu();
         }
     }
 
     private static void searchByCategoryMenu(){
         System.out.print("Enter '0' for back and just enter for continue: ");
         if (in.nextLine().equals("0")) {
-            searchMenu();
+            searchProductMenu();
         }
 
         System.out.println("Available categories are:\n" +
@@ -461,7 +465,7 @@ public class Main {
     private static void searchByNameMenu(){
         System.out.print("Enter '0' for back and just enter for continue: ");
         if (in.nextLine().equals("0")) {
-            searchMenu();
+            searchProductMenu();
         }
 
         System.out.println("Enter the name of product: ");
@@ -568,7 +572,7 @@ public class Main {
 
         System.out.println("What do you want to do?\n" +
                 "1. edit shopping cart" +
-                "2. register this order");
+                "2. submit this order");
 
         try {
             short choice = in.nextShort();
@@ -600,7 +604,7 @@ public class Main {
         if (product != null){
             System.out.println("What do you want todo with this product?" +
                     "1. remove this item" +
-                    "2. edit quantity of an item");
+                    "2. edit quantity of item");
 
             try{
                 short choice = in.nextShort();
