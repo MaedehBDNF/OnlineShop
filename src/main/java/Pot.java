@@ -28,6 +28,6 @@ public class Pot extends Product{
     public String toString() {
         return super.toString() +
                 " commodity: " + commodity + "\n" +
-                " volume=" + volume;
+                " volume=" + volume + "}" ;
     }
 }

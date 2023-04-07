@@ -28,7 +28,7 @@ public class Seat extends Product{
     public String toString() {
         return super.toString() +
                 " commodity of structure: " + commodityOfStructure + "\n" +
-                " commodity of seat: " + commodityOfSeat;
+                " commodity of seat: " + commodityOfSeat+ "}" ;
     }
 }
 

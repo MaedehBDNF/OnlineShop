@@ -39,6 +39,6 @@ public class Pen extends Product{
         return super.toString() +
                 " manufacture: '" + manufacture + '\'' + "\n" +
                 " thickness=" + thickness + "\n" +
-                " color: " + color;
+                " color: " + color + "}" ;
     }
 }

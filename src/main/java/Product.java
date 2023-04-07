@@ -86,7 +86,7 @@ public abstract class Product {
     @Override
     public String toString() {
         if (this.quantity == 0){
-            return  " name='" + name + "'\n" +
+            return  " {name='" + name + "'\n" +
                     " price=" + price + "\n" +
                     " seller=" + seller.getCompanyName() + "\n" +
                     " category='" + category + '\'' + "\n" +
@@ -94,12 +94,12 @@ public abstract class Product {
                     "'OUT OF STOCK'";
 
         } else {
-            return  " name='" + name + "'\n" +
+            return  " {name='" + name + "'\n" +
                     " price=" + price + "\n" +
                     " seller=" + seller.getCompanyName() + "\n" +
                     " quantity=" + quantity + "\n" +
                     " category='" + category + '\'' + "\n" +
-                    " comments=" + comments;
+                    " comments=" + comments + "\n";
         }
     }
 }

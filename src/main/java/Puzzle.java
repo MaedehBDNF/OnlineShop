@@ -17,6 +17,6 @@ public class Puzzle extends Product{
     @Override
     public String toString() {
         return super.toString() +
-                "number of pieces=" + numOfPieces;
+                "number of pieces=" + numOfPieces + "}" ;
     }
 }

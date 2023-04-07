@@ -28,6 +28,6 @@ public class Ring extends Product{
     public String toString() {
         return super.toString() +
                 " size= " + size + "\n" +
-                " commodity: " + commodity ;
+                " commodity: " + commodity + "}" ;
     }
 }

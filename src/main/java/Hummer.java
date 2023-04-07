@@ -28,6 +28,6 @@ public class Hummer extends Product{
     public String toString() {
         return super.toString() +
                 " commodity: " + commodity + "\n" +
-                " mass=" + mass;
+                " mass=" + mass + "}" ;
     }
 }

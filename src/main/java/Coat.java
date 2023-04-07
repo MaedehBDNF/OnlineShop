@@ -28,6 +28,6 @@ public class Coat extends Product{
     public String toString() {
         return super.toString() +
                 " size=" + size + "\n" +
-                " number of pockets=" + numOfPockets;
+                " number of pockets=" + numOfPockets + "}" ;
     }
 }

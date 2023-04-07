@@ -61,6 +61,6 @@ public class Car extends Product{
                 " gear: " + gear + "\n" +
                 " color: " + color + "\n" +
                 " number of seats=" + numOfSeats + "\n" +
-                " number of doors=" + numOfDoors;
+                " number of doors=" + numOfDoors + "}" ;
     }
 }

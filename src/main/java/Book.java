@@ -39,6 +39,6 @@ public class Book extends Product{
         return super.toString() +
                 " author=" + author +  "\n" +
                 " year of publish=" + yearOfPublish + "\n" +
-                " ISBN: " + isbn ;
+                " ISBN: " + isbn + "}" ;
     }
 }

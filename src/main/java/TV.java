@@ -28,6 +28,6 @@ public class TV extends Product {
     public String toString() {
         return super.toString() +
                 " inches=" + inches + "\n" +
-                " pixels=" + pixels;
+                " pixels=" + pixels+ "}" ;
     }
 }
