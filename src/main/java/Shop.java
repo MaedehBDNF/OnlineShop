@@ -242,6 +242,16 @@ public class Shop {
         return foundProducts;
     }
 
+    public ArrayList<Product> searchProductsBySeller(Seller seller){
+        ArrayList<Product> foundProducts = new ArrayList<>();
+        for (Product prod: products){
+            if (prod.getSeller().getId().equals(seller.getId())){
+                foundProducts.add(prod);
+            }
+        }
+        return foundProducts;
+    }
+
     public void assignRequestsToAdmins(){
         int numOfAdmins = adminsOfShop.size();
 
