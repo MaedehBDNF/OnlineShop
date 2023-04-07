@@ -1341,8 +1341,9 @@ public class Main {
         } catch (Exception e) {
             in.nextLine();
             System.out.println("You just entered wrong entry. Please try again.");
-            productMenu(product);
+            increaseQuantityOfProduct(product);
         }
+        sellerMenu();
     }
 
     private static void adminMenu() {
