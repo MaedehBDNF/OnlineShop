@@ -730,5 +730,622 @@ public class Main {
         }
     }
 
+    private static void sellerMenu() {
+        System.out.println("What do you want to do? \n" +
+                "   1. Send Authorization request  \n" +
+                "   2. Request tracking \n" +
+                "   3. Add a new product\n" +
+                "   4. Search in your own products \n" +
+                "       - increase quantity of one product \n" +
+                "   5. View wallet \n" +
+                "   6. Logout");
 
+        try{
+            short choice = in.nextShort();
+            in.nextLine();
+            if (1 <= choice && choice <= 6) {
+                switch (choice) {
+                    case 1:
+                        sendAuthorizationRequest();
+                        break;
+                    case 2:
+                        requestTrackingForSeller();
+                        break;
+                    case 3:
+                        if (checkPermission()){
+                            addNewProductMenu();
+                        } else {
+                            System.out.println("You should first get permission from an admin.");
+                            sellerMenu();
+                        }
+                        break;
+                    case 4:
+                        if (checkPermission()){
+                            searchSellersProducts();
+                        } else {
+                            System.out.println("You should first get permission from an admin.");
+                            sellerMenu();
+                        }
+                        break;
+                    case 5:
+                        if (checkPermission()){
+                            System.out.println(((Seller) mainShop.getCurrentUser()).getWallet());
+                            sellerMenu();
+                        } else {
+                            System.out.println("You should first get permission from an admin.");
+                            sellerMenu();
+                        }
+                        break;
+                    case 6:
+                        mainShop.logout();
+                        startMenu();
+                        break;
+                }
+            } else {
+                System.out.println("Enter a number in range 1 - 6");
+                sellerMenu();
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            sellerMenu();}
+    }
+
+    private static boolean checkPermission(){
+        return ((Seller) mainShop.getCurrentUser()).getAuthorization();
+    }
+
+    // case 1 of seller menu
+    private static void sendAuthorizationRequest(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            sellerMenu();
+        }
+
+        Seller seller = (Seller) mainShop.getCurrentUser();
+        AuthorizationRequest request = seller.sendAuthorizationRequest(mainShop);
+        System.out.println("Your request just sent for "+ mainShop.getName() + ". Wait until an admin get permission to you.\n" +
+                "Save this code for tracking. code: " + request.getId());
+        sellerMenu();
+    }
+
+    // case 2 of seller menu
+    private static void requestTrackingForSeller(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            sellerMenu();
+        }
+
+        System.out.println("Enter the code of request: ");
+        UUID id = UUID.fromString(in.nextLine());
+
+        for (Admin admin: mainShop.getAdminsOfShop()){
+            for (Request req: admin.getPendingRequests()){
+                if (req.getId().equals(id)){
+                    System.out.println("Your request has not checked yet!");
+                }
+            }
+        }
+
+        for (Admin admin: mainShop.getAdminsOfShop()){
+            for (Request req: admin.getWorkHistory()){
+                if (req.getId().equals(id)){
+                    if (req.isSubmitted()){
+                        System.out.println("Congratulations! Your request was accepted. You are now one of our shop family.");
+                    } else {
+                        System.out.println("Sorry! Your request was not accepted.");
+                    }
+                }
+            }
+        }
+        sellerMenu();
+    }
+
+    // case 3 of seller menu
+    private static void addNewProductMenu(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            sellerMenu();
+        }
+
+        System.out.println("Available products to add are:\n" +
+                "1. TV in electronics category \n" +
+                "2. Coat in clothes category \n" +
+                "3. Book in book category \n" +
+                "4. Hummer in tools category \n" +
+                "5. Seat in furniture category \n" +
+                "6. Ring in jewel category \n" +
+                "7. Pot in kitchen utensils category \n" +
+                "8. Car in vehicle category \n" +
+                "9. Pen in stationery category \n" +
+                "10. puzzle in toys category");
+        System.out.println("Enter the number of one of this products if you want: ");
+
+        try{
+            short choice = in.nextShort();
+            in.nextLine();
+            if (1 <= choice && choice <= 10) {
+                switch (choice) {
+                    case 1:
+                        addNewTV();
+                        break;
+                    case 2:
+                        addNewCoat();
+                        break;
+                    case 3:
+                        addNewBook();
+                        break;
+                    case 4:
+                        addNewHummer();
+                        break;
+                    case 5:
+                        addNewSeat();
+                        break;
+                    case 6:
+                        addNewRing();
+                        break;
+                    case 7:
+                        addNewPot();
+                        break;
+                    case 8:
+                        addNewCar();
+                        break;
+                    case 9:
+                        addNewPen();
+                        break;
+                    case 10:
+                        addNewPuzzle();
+                        break;
+                }
+            } else {
+                System.out.println("Enter a number in range 1 - 6");
+                addNewProductMenu();
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            addNewProductMenu();
+        }
+    }
+
+    private static void addNewTV(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        double inches = getInchesOfTV();
+        int pixels = getPixelsOfTV();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewTV(mainShop, name, price, quantity, seller, "ELECTRONICS", inches, pixels);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static String getNameOfProduct(){
+        System.out.println("Enter whole name of product: ");
+        return in.nextLine();
+    }
+
+    private static double getPriceOfProduct(){
+        try {
+            System.out.println("Price: ");
+            double price = in.nextDouble();
+            in.nextLine();
+            return price;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getPriceOfProduct();
+    }
+
+    private static int getQuantityOfProduct(){
+        try {
+            System.out.println("Quantity: ");
+            int quantity = in.nextInt();
+            in.nextLine();
+            return quantity;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getQuantityOfProduct();
+    }
+
+    private static double getInchesOfTV(){
+        try {
+            System.out.println("Inches: ");
+            double inches = in.nextDouble();
+            in.nextLine();
+            return inches;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getInchesOfTV();
+    }
+
+    private static int getPixelsOfTV(){
+        try {
+            System.out.println("Pixels: ");
+            int pixels = in.nextInt();
+            in.nextLine();
+            return pixels;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getPixelsOfTV();
+    }
+
+    private static void addNewCoat(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        double size = getSize();
+        int pockets = getNumOfPocketsOfCoat();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewCoat(mainShop, name, price, quantity, seller, "CLOTHES", size, pockets);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static double getSize(){
+        try {
+            System.out.println("Size: ");
+            double size = in.nextDouble();
+            in.nextLine();
+            return size;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getSize();
+    }
+
+    private static int getNumOfPocketsOfCoat(){
+        try {
+            System.out.println("Number of pockets: ");
+            int pockets = in.nextInt();
+            in.nextLine();
+            return pockets;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getNumOfPocketsOfCoat();
+    }
+
+    private static void addNewBook(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        System.out.println("Author: ");
+        String author = in.nextLine();
+        int publishYear = getPublishYearOfBook();
+        String isbn = getISBNOfBook();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewBook(mainShop, name, price, seller, quantity, "BOOKS", author, publishYear, isbn);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static int getPublishYearOfBook(){
+        try {
+            System.out.println("Year of Publication: ");
+            int publishYear = in.nextInt();
+            in.nextLine();
+            return publishYear;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getPublishYearOfBook();
+    }
+
+    private static String getISBNOfBook(){
+        System.out.println("ISBN: ");
+        String isbn = in.nextLine();
+        Pattern pattern = Pattern.compile("[0-9]{13}");
+        if (Pattern.matches(pattern.toString(), isbn)){
+            return isbn;
+        } else {
+            System.out.println("Wrong entry! Try again.");
+            return getISBNOfBook();
+        }
+    }
+
+    private static void addNewHummer(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        System.out.println("Commodity: ");
+        String commodity = in.nextLine();
+        double mass = getMassOfHummer();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewHummer(mainShop, name, price, seller, quantity, "TOOLS", commodity, mass);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+
+    private static double getMassOfHummer(){
+        try {
+            System.out.println("Mass: ");
+            double mass = in.nextDouble();
+            in.nextLine();
+            return mass;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getMassOfHummer();
+    }
+
+    private static void addNewSeat(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        System.out.println("Commodity of structure: ");
+        String commodityOfStructure = in.nextLine();
+        System.out.println("Commodity of seat: ");
+        String commodityOfSeat = in.nextLine();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewSeat(mainShop, name, price, seller, quantity, "FURNITURE", commodityOfStructure, commodityOfSeat);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static void addNewRing(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        double size = getSize();
+        System.out.println("Commodity: ");
+        String commodity = in.nextLine();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewRing(mainShop, name, price, seller, quantity, "JEWEL", size, commodity);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static void addNewPot(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        System.out.println("Commodity: ");
+        String commodity = in.nextLine();
+        double volume = getVolumeOfPot();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewPot(mainShop, name, price, seller, quantity, "KITCHEN_UTENSILS", commodity, volume);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static double getVolumeOfPot(){
+        try {
+            System.out.println("Volume: ");
+            double volume = in.nextDouble();
+            in.nextLine();
+            return volume;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getVolumeOfPot();
+    }
+
+    private static void addNewCar(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        System.out.println("Manufacture: ");
+        String manufacture = in.nextLine();
+        System.out.println("Type of gear: ");
+        String gear = in.nextLine();
+        System.out.println("Color:");
+        String color = in.nextLine();
+        int numOfSeats = getNumOfSeatsOfCar();
+        int numOfDoors = getNumOfDoorsOfCar();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewCar(mainShop, name, price, seller, quantity, "VEHICLE", manufacture, gear, color, numOfSeats ,numOfDoors);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static int getNumOfSeatsOfCar(){
+        try {
+            System.out.println("Number of seats: ");
+            int numOfSeats = in.nextInt();
+            in.nextLine();
+            return numOfSeats;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getNumOfSeatsOfCar();
+    }
+
+    private static int getNumOfDoorsOfCar(){
+        try {
+            System.out.println("Number of doors: ");
+            int numOfDoors = in.nextInt();
+            in.nextLine();
+            return numOfDoors;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getNumOfDoorsOfCar();
+    }
+
+    private static void addNewPen(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        System.out.println("Manufacture: ");
+        String manufacture = in.nextLine();
+        float thickness = getThicknessOfPen();
+        System.out.println("Color:");
+        String color = in.nextLine();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewPen(mainShop, name, price, seller, quantity, "STATIONERY", manufacture, thickness, color);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static float getThicknessOfPen(){
+        try {
+            System.out.println("Thickness: ");
+            float thickness = in.nextFloat();
+            in.nextLine();
+            return thickness;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getThicknessOfPen();
+    }
+
+    private static void addNewPuzzle(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            addNewProductMenu();
+        }
+
+        String name = getNameOfProduct();
+        double price = getPriceOfProduct();
+        int quantity = getQuantityOfProduct();
+        int numOfPieces = getNumOfPiecesOfPuzzle();
+
+        Seller seller = ((Seller) mainShop.getCurrentUser());
+        seller.addNewPuzzle(mainShop, name, price, seller, quantity, "TOYS", numOfPieces);
+        System.out.println("Product just added successfully.");
+        sellerMenu();
+    }
+
+    private static int getNumOfPiecesOfPuzzle(){
+        try {
+            System.out.println("Number of pieces: ");
+            int numOfPieces = in.nextInt();
+            in.nextLine();
+            return numOfPieces;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getNumOfPiecesOfPuzzle();
+    }
+
+    // case 4 of seller menu
+    private static void searchSellersProducts(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            sellerMenu();
+        }
+
+        Seller seller = (Seller) mainShop.getCurrentUser();
+        ArrayList<Product> sellersProducts = mainShop.searchProductsBySeller(seller);
+        selectProductForSeller(sellersProducts);
+    }
+
+    private static void selectProductForSeller(ArrayList<Product> products){
+        System.out.println("\"Found Products\"\n");
+        for (int i = 0; i < products.size(); i++){
+            System.out.println(i + 1 + ") " + products.get(i) + "\n\n");
+        }
+
+        System.out.println("Select one of above products to increase its quantity or 0 for back to menu. Just enter its number: ");
+        try{
+            int choice = in.nextInt();
+            in.nextLine();
+            if (choice == 0){
+                sellerMenu();
+            } else if (1 <= choice && choice <= products.size()){
+                increaseQuantityOfProduct(products.get(choice - 1));
+            } else {
+                System.out.println("Number was not in range!");
+                selectProductForSeller(products);
+            }
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            selectProductForSeller(products);
+        }
+    }
+
+    private static void increaseQuantityOfProduct(Product product){
+        System.out.println("Selected Product:\n" +
+                product);
+        System.out.println("Number of increase: ");
+        try {
+            int numOfIncrease = in.nextInt();
+            in.nextLine();
+            Seller seller = (Seller) mainShop.getCurrentUser();
+            seller.increaseNumberOfProduct(mainShop, numOfIncrease, product);
+            System.out.println("Quantity just increased. new quantity is " + product.getQuantity());
+            sellerMenu();
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            productMenu(product);
+        }
+    }
+
+    private static void adminMenu() {
+
+    }
 }
