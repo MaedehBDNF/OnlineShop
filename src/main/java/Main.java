@@ -596,7 +596,7 @@ public class Main {
         System.out.println("Shopping Cart:");
         int counter = 1;
         for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()){
-            System.out.println(counter + ") " + "Product: " + entry.getKey().getName() + "quantity: " + entry.getValue() + "\n");
+            System.out.println(counter + ") " + "Product: " + entry.getKey().getName() + " , quantity: " + entry.getValue() + "\n");
             counter++;
         }
 
