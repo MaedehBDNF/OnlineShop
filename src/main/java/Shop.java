@@ -14,7 +14,7 @@ public class Shop {
     private ArrayList<Request> pendingRequests = new ArrayList<Request>();
     private ArrayList<Order> orders = new ArrayList<Order>();
     private ArrayList<Admin> adminsOfShop = new ArrayList<Admin>();
-    private int index = 0; // this attribute is for assign requests to admins
+    private int indexOfLastAdminGotJob = 0; // this attribute is for assign requests to admins
 
     public Shop(String name, String webAddress, String supportPhone) {
         this.name = name;
@@ -246,7 +246,7 @@ public class Shop {
         int numOfAdmins = adminsOfShop.size();
 
         if (pendingRequests.size() != 0) {
-           adminsOfShop.get((index - 1) % numOfAdmins).getPendingRequests().add(pendingRequests.get(0));
+           adminsOfShop.get((indexOfLastAdminGotJob - 1) % numOfAdmins).getPendingRequests().add(pendingRequests.get(0));
            pendingRequests.remove(0);
         }
     }
@@ -255,7 +255,7 @@ public class Shop {
         if (!buyer.getShoppingCart().isEmpty()){
             Order order = new Order(buyer);
             this.pendingRequests.add(order);
-            index++;
+            indexOfLastAdminGotJob++;
             buyer.getInProcessRequests().add(order);
             buyer.getShoppingCart().clear(); // clear user cart after register order
             updateAccount(buyer);
@@ -268,7 +268,7 @@ public class Shop {
     public FundRequest makeFundRequest(double fund, User requester){
         FundRequest fundRequest = new FundRequest(fund, requester);
         this.pendingRequests.add(fundRequest);
-        index++;
+        indexOfLastAdminGotJob++;
         requester.getInProcessRequests().add(fundRequest);
         updateAccount(requester);
         assignRequestsToAdmins();
@@ -278,7 +278,7 @@ public class Shop {
     public void makeAuthorizationRequest(Seller seller){
         AuthorizationRequest authorizationRequest = new AuthorizationRequest(seller);
         this.pendingRequests.add(authorizationRequest);
-        index++;
+        indexOfLastAdminGotJob++;
         updateAccount(seller);
         assignRequestsToAdmins();
     }
