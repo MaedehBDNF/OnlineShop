@@ -566,6 +566,7 @@ public class Main {
             double credit = in.nextDouble();
             in.nextLine();
             ((User) mainShop.getCurrentUser()).chargeWallet(credit);
+            System.out.println("Your wallet charged successfully." + ((User) mainShop.getCurrentUser()).getWallet());
         } catch (Exception e){
             in.nextLine();
             System.out.println("You just entered wrong entry. Please try again.");
@@ -591,7 +592,7 @@ public class Main {
         }
 
         System.out.println("What do you want to do?\n" +
-                "1. edit shopping cart" +
+                "1. edit shopping cart \n" +
                 "2. submit this order");
 
         try {
@@ -642,7 +643,7 @@ public class Main {
         Product product = selectProductInCart();
         if (product != null){
             System.out.println("What do you want todo with this product?" +
-                    "1. remove this item" +
+                    "1. remove this item \n" +
                     "2. edit quantity of item");
 
             try{
@@ -1518,7 +1519,7 @@ public class Main {
         System.out.println("What do you want to do? \n" +
                 "   1. View pending requests \n" +
                 "       - submit or reject a request \n" +
-                "   2. View work History \n " +
+                "   2. View work History \n" +
                 "   3. View profile screen of a user \n" +
                 "   4. Give fund to one user \n" +
                 "   5. add new admin \n" +

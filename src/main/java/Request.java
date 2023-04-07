@@ -26,6 +26,6 @@ public abstract class Request {
     public String toString() {
         return "Request: " + "\n" +
                 " code= " + id + "\n" +
-                ", isSubmitted=" + isSubmitted +  "\n";
+                " isSubmitted=" + isSubmitted +  "\n";
     }
 }
