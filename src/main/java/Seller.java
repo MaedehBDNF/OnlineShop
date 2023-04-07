@@ -41,7 +41,7 @@ public class Seller extends Account{
         shop.addNewTV(name, price, seller, quantity, category, inches, pixels);
     }
 
-    public void addNewCoat(Shop shop, String name, double price, int quantity, Seller seller, String category, float size, int pockets){
+    public void addNewCoat(Shop shop, String name, double price, int quantity, Seller seller, String category, double size, int pockets){
         shop.addNewCoat(name, price, seller, quantity, category, size, pockets);
     }
 

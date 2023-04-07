@@ -161,7 +161,7 @@ public class Shop {
         products.add(newProduct);
     }
 
-    public void addNewCoat(String name, double price, Seller seller, int quantity, String category, float size, int pockets){
+    public void addNewCoat(String name, double price, Seller seller, int quantity, String category, double size, int pockets){
         Coat newProduct = new Coat(name, price, seller, quantity, category, size, pockets);
         products.add(newProduct);
     }

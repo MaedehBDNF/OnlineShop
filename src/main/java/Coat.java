@@ -1,14 +1,14 @@
 public class Coat extends Product{
-    private float size;
+    private double size;
     private int numOfPockets;
 
-    public Coat(String name, double price, Seller seller, int quantity, String category, float size, int numOfPockets) {
+    public Coat(String name, double price, Seller seller, int quantity, String category, double size, int numOfPockets) {
         super(name, price, seller, quantity, category);
         this.size = size;
         this.numOfPockets = numOfPockets;
     }
 
-    public float getSize() {
+    public double getSize() {
         return size;
     }
 
