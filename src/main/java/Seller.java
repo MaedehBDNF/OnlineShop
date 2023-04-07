@@ -29,12 +29,16 @@ public class Seller extends Account{
         return authorization;
     }
 
+    public boolean getAuthorization(){
+        return this.authorization;
+    }
+
     public void setAuthorization(boolean authorization) {
         this.authorization = authorization;
     }
 
-    public void sendAuthorizationRequest(Shop shop){
-        shop.makeAuthorizationRequest(this);
+    public AuthorizationRequest sendAuthorizationRequest(Shop shop){
+        return shop.makeAuthorizationRequest(this);
     }
 
     public void addNewTV(Shop shop, String name, double price, int quantity, Seller seller, String category, double inches, int pixels){
