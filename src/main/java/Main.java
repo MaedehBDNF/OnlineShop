@@ -1237,7 +1237,7 @@ public class Main {
         int quantity = getQuantityOfProduct();
         System.out.println("Manufacture: ");
         String manufacture = in.nextLine();
-        float thickness = getThicknessOfPen();
+        double thickness = getThicknessOfPen();
         System.out.println("Color:");
         String color = in.nextLine();
 
@@ -1247,10 +1247,10 @@ public class Main {
         sellerMenu();
     }
 
-    private static float getThicknessOfPen(){
+    private static double getThicknessOfPen(){
         try {
             System.out.println("Thickness: ");
-            float thickness = in.nextFloat();
+            double thickness = in.nextDouble();
             in.nextLine();
             return thickness;
         } catch (Exception e) {

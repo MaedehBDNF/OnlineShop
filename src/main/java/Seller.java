@@ -73,7 +73,7 @@ public class Seller extends Account{
         shop.addNewCar(name, price, seller, quantity, category, manufacture, gear, color, numOfSeats, numOfDoors);
     }
 
-    public void addNewPen(Shop shop, String name, double price, Seller seller, int quantity, String category, String manufacture, float thickness, String color){
+    public void addNewPen(Shop shop, String name, double price, Seller seller, int quantity, String category, String manufacture, double thickness, String color){
         shop.addNewPen(name, price, seller, quantity, category, manufacture, thickness, color);
     }
 

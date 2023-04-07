@@ -1,9 +1,9 @@
 public class Pen extends Product{
     private String manufacture;
-    private float thickness;
+    private double thickness;
     private String color;
 
-    public Pen(String name, double price, Seller seller, int quantity, String category, String manufacture, float thickness, String color) {
+    public Pen(String name, double price, Seller seller, int quantity, String category, String manufacture, double thickness, String color) {
         super(name, price, seller, quantity, category);
         this.manufacture = manufacture;
         this.thickness = thickness;
@@ -18,7 +18,7 @@ public class Pen extends Product{
         this.manufacture = manufacture;
     }
 
-    public float getThickness() {
+    public double getThickness() {
         return thickness;
     }
 

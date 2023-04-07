@@ -196,7 +196,7 @@ public class Shop {
         products.add(newProduct);
     }
 
-    public void addNewPen(String name, double price, Seller seller, int quantity, String category, String manufacture, float thickness, String color){
+    public void addNewPen(String name, double price, Seller seller, int quantity, String category, String manufacture, double thickness, String color){
         Pen newProduct = new Pen(name, price, seller, quantity, category, manufacture, thickness, color);
         products.add(newProduct);
     }
