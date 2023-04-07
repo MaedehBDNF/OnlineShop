@@ -185,7 +185,7 @@ public class Main {
                 "   5. Request tracking \n" +
                 "   6. View pending requests \n" +
                 "   7. View successful requests\n" +
-                "   8. View rejected Requests\n " +
+                "   8. View rejected Requests\n" +
                 "   9. Edit information \n" +
                 "   10. Logout");
         try{
@@ -224,7 +224,7 @@ public class Main {
                         userMenu();
                         break;
                     case 9:
-                        //editInformationMenu();
+                        editInformationMenu();
                         break;
                     case 10:
                         mainShop.logout();
@@ -750,6 +750,152 @@ public class Main {
             System.out.println(counter +") " + request);
             counter++;
         }
+    }
+
+    // case 9 of user menu
+    private static void editInformationMenu(){
+        System.out.println("What do you want to do? \n" +
+                "   1. Edit username \n" +
+                "   2. Edit password \n" +
+                "   3. Edit email \n" +
+                "   4. Edit phone number \n" +
+                "   5. Edit Address \n" +
+                "   6. Edit profile screen");
+
+        try{
+            short choice = in.nextShort();
+            in.nextLine();
+            if (1 <= choice && choice <= 6) {
+                switch (choice) {
+                    case 1:
+                        editUsername();
+                        break;
+                    case 2:
+                        editPassword();
+                        break;
+                    case 3:
+                        editEmail();
+                        break;
+                    case 4:
+                        editPhoneNumber();
+                        break;
+                    case 5:
+                        editAddress();
+                        break;
+                    case 6:
+                        editProfileScreen();
+                        break;
+                }
+            } else {
+                System.out.println("Enter a number in range 1 - 6");
+                sellerMenu();
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            sellerMenu();}
+    }
+
+    private static void editUsername(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User user = (User) mainShop.getCurrentUser();
+        String newUsername = getUsername();
+
+        if (user.editUserName(newUsername)){
+            System.out.println("Username updated successfully.");
+        } else {
+            System.out.println("New username was same as before!");
+        }
+        userMenu();
+    }
+
+    private static void editPassword(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User user = (User) mainShop.getCurrentUser();
+        String newPassword = getPassword();
+
+        if (user.editPassword(newPassword)){
+            System.out.println("Password updated successfully.");
+        } else {
+            System.out.println("New password was same as before!");
+        }
+        userMenu();
+    }
+
+    private static void editEmail(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User user = (User) mainShop.getCurrentUser();
+        String newEmail = getEmailAddress();
+
+        if (user.editEmailAddress(newEmail)){
+            System.out.println("Email address updated successfully.");
+        } else {
+            System.out.println("New Email address was same as before!");
+        }
+        userMenu();
+    }
+
+    private static void editPhoneNumber(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User user = (User) mainShop.getCurrentUser();
+        String newPhoneNumber = getPhoneNumber();
+
+        if (user.editPhoneNumber(newPhoneNumber)){
+            System.out.println("Phone number updated successfully.");
+        } else {
+            System.out.println("New phone number was same as before!");
+        }
+        userMenu();
+    }
+
+    private static void editAddress(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User user = (User) mainShop.getCurrentUser();
+        Address newAddress = getAddress();
+
+        if (user.editAddress(newAddress)){
+            System.out.println("Address updated successfully.");
+        } else {
+            System.out.println("New Address was same as before!");
+        }
+        userMenu();
+    }
+
+    private static void editProfileScreen(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            userMenu();
+        }
+
+        User user = (User) mainShop.getCurrentUser();
+        String newProfileScreen = getProfilePhoto();
+
+        if (user.editProfileScreen(newProfileScreen)){
+            System.out.println("Profile screen updated successfully.");
+        } else {
+            System.out.println("New profile screen was same as before!");
+        }
+        userMenu();
     }
 
     private static void sellerMenu() {

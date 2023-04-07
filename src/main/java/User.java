@@ -94,6 +94,15 @@ public class User extends Account{
         this.wallet = wallet;
     }
 
+    public boolean editEmailAddress(String newEmailAddress){
+        if (newEmailAddress.equals(this.emailAddress)){
+            return false;
+        } else {
+            setEmailAddress(newEmailAddress);
+            return true;
+        }
+    }
+
     public boolean editPhoneNumber(String newPhoneNumber){
         if (newPhoneNumber.equals(this.phoneNumber)){
             return false;
