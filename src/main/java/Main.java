@@ -169,7 +169,7 @@ public class Main {
         try{
             short choice = in.nextShort();
             in.nextLine();
-            if (1 <= choice && choice <= 8) {
+            if (1 <= choice && choice <= 10) {
                 switch (choice) {
                     case 1:
                         searchProductMenu();
@@ -184,19 +184,22 @@ public class Main {
                         sendFundRequest();
                         break;
                     case 5:
-                        requestTracking();
+                        requestTrackingForUser();
                         break;
                     case 6:
                         System.out.println("Pending requests:");
                         presentRequestsList(((User) mainShop.getCurrentUser()).getInProcessRequests());
+                        userMenu();
                         break;
                     case 7:
                         System.out.println("Successful requests:");
                         presentRequestsList(((User) mainShop.getCurrentUser()).getFinishedRequests());
+                        userMenu();
                         break;
                     case 8:
                         System.out.println("Rejected requests:");
                         presentRequestsList(((User) mainShop.getCurrentUser()).getRejectedRequests());
+                        userMenu();
                         break;
                     case 9:
                         //editInformationMenu();
@@ -207,22 +210,14 @@ public class Main {
                         break;
                 }
             } else {
-                System.out.println("Enter a number in range 1 - 8");
+                System.out.println("Enter a number in range 1 - 10");
                 userMenu();
             }
         } catch (Exception e) {
+            in.nextLine();
             System.out.println("You just entered wrong entry. Please try again.");
             userMenu();
         }
-    }
-
-    private static void sellerMenu() {
-
-    }
-
-    private static void adminMenu() {
-
-
     }
 
     private static String getUsername(){
@@ -261,6 +256,7 @@ public class Main {
         if (Pattern.matches(pattern.toString(), phoneNumber)){
             return phoneNumber;
         } else {
+            System.out.println("wrong phone number! Try again.");
             return getPhoneNumber();
         }
     }
@@ -533,6 +529,7 @@ public class Main {
             System.out.println("You just entered wrong entry. Please try again.");
             productMenu(product);
         }
+        userMenu();
     }
 
     // case 2 of user menu
@@ -552,6 +549,7 @@ public class Main {
             System.out.println("You just entered wrong entry. Please try again.");
             chargeWallet();
         }
+        userMenu();
     }
 
     // case 3 of user menu
@@ -598,6 +596,25 @@ public class Main {
         }
     }
 
+    private static Product selectProductInCart(){
+        System.out.println("For edit cart first select that item.\n" +
+                "Enter number of product in above list: ");
+
+        int number = in.nextInt();
+
+        Map<Product, Integer> shoppingCart = ((User) mainShop.getCurrentUser()).getShoppingCart();
+
+        System.out.println("Shopping Cart:");
+        int counter = 1;
+        for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()){
+            if (counter == number){
+                return entry.getKey();
+            }
+            counter++;
+        }
+        return null;
+    }
+
     private static void editShoppingCartMenu(){
         User currentUser = (User) mainShop.getCurrentUser();
         Product product = selectProductInCart();
@@ -634,26 +651,7 @@ public class Main {
             System.out.println("Number was not in range. Please try again.");
             editShoppingCartMenu();
         }
-
-    }
-
-    private static Product selectProductInCart(){
-        System.out.println("For edit cart first select that item.\n" +
-                "Enter number of product in above list: ");
-
-        int number = in.nextInt();
-
-        Map<Product, Integer> shoppingCart = ((User) mainShop.getCurrentUser()).getShoppingCart();
-
-        System.out.println("Shopping Cart:");
-        int counter = 1;
-        for (Map.Entry<Product, Integer> entry: shoppingCart.entrySet()){
-            if (counter == number){
-                return entry.getKey();
-            }
-            counter++;
-        }
-        return null;
+        userMenu();
     }
 
     // case 4 of user menu
@@ -676,10 +674,11 @@ public class Main {
             System.out.println("You just entered wrong entry. Please try again.");
             sendFundRequest();
         }
+        userMenu();
     }
 
     // case 5 of user menu
-    private static void requestTracking(){
+    private static void requestTrackingForUser(){
         System.out.print("Enter '0' for back and just enter for continue: ");
         if (in.nextLine().equals("0")) {
             userMenu();
@@ -710,8 +709,7 @@ public class Main {
                 System.out.println("This request was rejected.");
             }
         }
-
-
+        userMenu();
     }
 
     private static Request searchRequest(ArrayList<Request> listOfRequests, UUID id){
