@@ -76,10 +76,19 @@ public class Main {
         String username = in.nextLine();
         System.out.print("Please Enter your password: ");
         String password = in.nextLine();
-        if (mainShop.findAccount(username) != null){
+        Account currentUser = mainShop.findAccount(username);
+        if (currentUser != null){
             if (mainShop.login(username, password)){
                 System.out.println("You log in Successfully!");
-                userMenu();
+                if (currentUser.getClass().getSimpleName().equals("User")){
+                    userMenu();
+                }
+                if (currentUser.getClass().getSimpleName().equals("Seller")){
+                    sellerMenu();
+                }
+                if (currentUser.getClass().getSimpleName().equals("Admin")){
+                    adminMenu();
+                }
             } else {
                 System.out.println("Sorry your password is wrong. Please try again.");
                 loginMenu();
@@ -642,7 +651,7 @@ public class Main {
         User currentUser = (User) mainShop.getCurrentUser();
         Product product = selectProductInCart();
         if (product != null){
-            System.out.println("What do you want todo with this product?" +
+            System.out.println("What do you want todo with this product? \n" +
                     "1. remove this item \n" +
                     "2. edit quantity of item");
 
