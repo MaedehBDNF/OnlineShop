@@ -23,7 +23,7 @@ public class Main {
         mainShop.userSignUp("default user", "987654321", "defaultuser@gmail.com","09123332211", defaultAddress, defaultProfileScreen, defaultWallet);
 
         mainShop.sellerSignUp("Ahmadi", "Ahmadi24@098", "AhmadiShop");
-        Seller seller1 = (Seller) mainShop.getAccounts().get(0);
+        Seller seller1 = (Seller) mainShop.getAccounts().get(2);
 
         mainShop.addNewTV("TV Sx770", 27000000, seller1, 5, "ELECTRONICS",22.5, 1000);
         mainShop.addNewCoat("Duffle Coat", 980.54, seller1, 4, "CLOTHES", 34, 2);
