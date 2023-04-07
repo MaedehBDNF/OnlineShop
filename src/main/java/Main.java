@@ -506,7 +506,7 @@ public class Main {
                 product);
         System.out.println("What do you want to do?\n" +
                 "1. Add this product to your shopping cart\n" +
-                "2. Leave comment" +
+                "2. Leave comment \n" +
                 "0. Back to menu");
         try {
             short choice = in.nextShort();
@@ -1063,7 +1063,7 @@ public class Main {
     private static String getISBNOfBook(){
         System.out.println("ISBN: ");
         String isbn = in.nextLine();
-        Pattern pattern = Pattern.compile("[0-9]{13}");
+        Pattern pattern = Pattern.compile("[0-9]{3}[-][0-9]{3}[-][0-9]{5}[-][0-9][-][0-9]");
         if (Pattern.matches(pattern.toString(), isbn)){
             return isbn;
         } else {
@@ -1094,7 +1094,7 @@ public class Main {
 
     private static double getMassOfHummer(){
         try {
-            System.out.println("Mass: ");
+            System.out.println("Mass in grams: ");
             double mass = in.nextDouble();
             in.nextLine();
             return mass;
@@ -1165,7 +1165,7 @@ public class Main {
 
     private static double getVolumeOfPot(){
         try {
-            System.out.println("Volume: ");
+            System.out.println("Volume in litre: ");
             double volume = in.nextDouble();
             in.nextLine();
             return volume;
