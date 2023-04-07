@@ -1347,6 +1347,292 @@ public class Main {
     }
 
     private static void adminMenu() {
+        System.out.println("What do you want to do? \n" +
+                "   1. View pending requests \n" +
+                "       - submit or reject a request \n" +
+                "   2. View work History \n " +
+                "   3. View profile screen of a user \n" +
+                "   4. Give fund to one user \n" +
+                "   5. add new admin \n" +
+                "   6. Logout");
 
+        try{
+            short choice = in.nextShort();
+            in.nextLine();
+            if (1 <= choice && choice <= 6) {
+                switch (choice) {
+                    case 1:
+                        viewPendingRequests();
+                        break;
+                    case 2:
+                        viewHistory();
+                        break;
+                    case 3:
+                        viewProfilePhotoOfUser();
+                        break;
+                    case 4:
+                        giveFundToUser();
+                        break;
+                    case 5:
+                        addNewAdmin();
+                        break;
+                    case 6:
+                        mainShop.logout();
+                        startMenu();
+                        break;
+                }
+            } else {
+                System.out.println("Enter a number in range 1 - 4");
+                sellerMenu();
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            adminMenu();
+        }
+    }
+
+    // case 1 of admin menu
+    private static void viewPendingRequests(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            adminMenu();
+        }
+
+        Admin admin = (Admin) mainShop.getCurrentUser();
+        ArrayList<Request> pendingRequests = admin.getPendingRequests();
+        selectRequest(pendingRequests);
+    }
+
+    private static void selectRequest(ArrayList<Request> requests){
+        System.out.println("\"Found Requests\"\n");
+        for (int i = 0; i < requests.size(); i++){
+            System.out.println(i + 1 + ") " + requests.get(i) + "\n\n");
+        }
+
+        System.out.println("Select one of above requests for submit or reject it or enter 0 for back to menu. Just enter a number: ");
+        try{
+            int choice = in.nextInt();
+            in.nextLine();
+            if (choice == 0){
+                adminMenu();
+            } else if (1 <= choice && choice <= requests.size()){
+                Request request = requests.get(choice - 1);
+                if (request.getClass().getSimpleName().equals("Order")){
+                    orderMenu((Order) request);
+                }
+                if (request.getClass().getSimpleName().equals("FundRequest")){
+                    fundRequestMenu((FundRequest) request);
+                }
+                if (request.getClass().getSimpleName().equals("AuthorizationRequest")){
+                    authorizationRequestMenu((AuthorizationRequest) request);
+                }
+            } else {
+                System.out.println("Number was not in range!");
+                selectRequest(requests);
+            }
+        } catch (Exception e){
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            selectRequest(requests);
+        }
+    }
+
+    private static void orderMenu(Order order){
+        System.out.println("Selected Request:\n" +
+                order);
+        System.out.println("What do you want to do?\n" +
+                "1. Submit request \n" +
+                "2. Reject request \n" +
+                "0. Back to menu");
+
+        Admin admin = (Admin) mainShop.getCurrentUser();
+
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            if (choice == 0){
+                adminMenu();
+            } else if (choice == 1) {
+                admin.submitOrder(mainShop, order);
+            } else if (choice == 2) {
+                User buyer = order.getBuyer();
+                buyer.getAdminsResponse(order);
+            } else {
+                System.out.println("Enter a number in range 0 - 2");
+                orderMenu(order);
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            orderMenu(order);
+        }
+        adminMenu();
+    }
+
+    private static void fundRequestMenu(FundRequest fundRequest){
+        System.out.println("Selected Request:\n" +
+                fundRequest);
+        System.out.println("What do you want to do?\n" +
+                "1. Submit request \n" +
+                "2. Reject request \n" +
+                "0. Back to menu");
+
+        Admin admin = (Admin) mainShop.getCurrentUser();
+
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            if (choice == 0){
+                adminMenu();
+            } else if (choice == 1) {
+                admin.giveFundToUser(mainShop, fundRequest);
+            } else if (choice == 2) {
+                User requester = fundRequest.getRequester();
+                requester.getAdminsResponse(fundRequest);
+            } else {
+                System.out.println("Enter a number in range 0 - 2");
+                fundRequestMenu(fundRequest);
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            fundRequestMenu(fundRequest);
+        }
+        adminMenu();
+    }
+
+    private static void authorizationRequestMenu(AuthorizationRequest authorizationRequest){
+        System.out.println("Selected Request:\n" +
+                authorizationRequest);
+        System.out.println("What do you want to do?\n" +
+                "1. Submit request \n" +
+                "2. Reject request \n" +
+                "0. Back to menu");
+
+        Admin admin = (Admin) mainShop.getCurrentUser();
+
+        try {
+            short choice = in.nextShort();
+            in.nextLine();
+            if (choice == 0){
+                adminMenu();
+            } else if (choice == 1) {
+                admin.acceptSeller(mainShop, authorizationRequest);
+            } else if (choice == 2) {
+                admin.rejectSeller(mainShop, authorizationRequest);
+            } else {
+                System.out.println("Enter a number in range 0 - 2");
+                authorizationRequestMenu(authorizationRequest);
+            }
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("You just entered wrong entry. Please try again.");
+            authorizationRequestMenu(authorizationRequest);
+        }
+        adminMenu();
+    }
+
+    // case 2 of admin menu
+    private static void viewHistory(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            adminMenu();
+        }
+
+        Admin admin = (Admin) mainShop.getCurrentUser();
+        ArrayList<Request> workHistory = admin.getWorkHistory();
+
+        for (int i = 0; i < workHistory.size(); i++){
+            System.out.println(i + 1 + ") " + workHistory.get(i) + "\n\n");
+        }
+        adminMenu();
+    }
+
+    // case 3 of admin menu
+    private static void viewProfilePhotoOfUser() throws IOException {
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            adminMenu();
+        }
+
+        System.out.println("Enter the username of the user: ");
+        String username = in.nextLine();
+        User user = searchInUsers(username);
+        if (user != null){
+            Admin admin = (Admin) mainShop.getCurrentUser();
+            admin.viewProfilePhoto(user);
+            adminMenu();
+        } else {
+            System.out.println("Invalid username! Please try again.");
+            viewProfilePhotoOfUser();
+        }
+    }
+
+    private static User searchInUsers(String username){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            adminMenu();
+        }
+
+        for (Account account: mainShop.getAccounts()){
+            if (account.getUsername().equals(username)){
+                return (User) account;
+            }
+        }
+        return null;
+    }
+
+    // case 4 of admin menu
+    private static void giveFundToUser() throws IOException {
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            adminMenu();
+        }
+
+        System.out.println("Enter the username of the user: ");
+        String username = in.nextLine();
+        User user = searchInUsers(username);
+        if (user != null){
+            Admin admin = (Admin) mainShop.getCurrentUser();
+            double fund = getFundValue();
+            admin.giveFundToUser(mainShop, user, fund);
+            System.out.println("Fund added.");
+            adminMenu();
+        } else {
+            System.out.println("Invalid username! Please try again.");
+            viewProfilePhotoOfUser();
+        }
+    }
+
+    private static double getFundValue(){
+        try {
+            System.out.println("Fund value: ");
+            double fund = in.nextDouble();
+            in.nextLine();
+            return fund;
+        } catch (Exception e) {
+            in.nextLine();
+            System.out.println("Wrong entry. Please try again.");
+        }
+        return getFundValue();
+    }
+
+    // case 5 of admin menu
+    private static void addNewAdmin(){
+        System.out.print("Enter '0' for back and just enter for continue: ");
+        if (in.nextLine().equals("0")) {
+            adminMenu();
+        }
+
+        System.out.println("Fill based admins information: ");
+        String username = getUsername();
+        String password = getPassword();
+        String email = getEmailAddress();
+
+        Admin admin = (Admin) mainShop.getCurrentUser();
+        admin.addNewAdmin(mainShop, username, password, email);
+
+        adminMenu();
     }
 }
