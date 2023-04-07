@@ -275,12 +275,13 @@ public class Shop {
         return fundRequest;
     }
 
-    public void makeAuthorizationRequest(Seller seller){
+    public AuthorizationRequest makeAuthorizationRequest(Seller seller){
         AuthorizationRequest authorizationRequest = new AuthorizationRequest(seller);
         this.pendingRequests.add(authorizationRequest);
         indexOfLastAdminGotJob++;
         updateAccount(seller);
         assignRequestsToAdmins();
+        return authorizationRequest;
     }
 
     public void updateProduct(Product updatedProduct){
