@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileSystemView;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -13,6 +14,27 @@ public class Main {
     public static void main(String[] args){
         in = new Scanner(System.in);
 
+        //add little data for test
+        mainShop.adminSignUp("mainAdmin", "******", "admin@gmail.com");
+
+        Address defaultAddress = new Address("Tehran", "Tehran", "Daneshjo", 34);
+        Wallet defaultWallet = new Wallet(0);
+        String defaultProfileScreen = "H:\\Uni\\Semesters\\Semester 8\\2- Advanced Programming\\Exercises\\Assignments\\Nourouz Project\\OnlineShop\\defaultProfileScreen.jpg";
+        mainShop.userSignUp("default user", "987654321", "defaultuser@gmail.com","09123332211", defaultAddress, defaultProfileScreen, defaultWallet);
+
+        mainShop.sellerSignUp("Ahmadi", "Ahmadi24@098", "AhmadiShop");
+        Seller seller1 = (Seller) mainShop.getAccounts().get(0);
+
+        mainShop.addNewTV("TV Sx770", 27000000, seller1, 5, "ELECTRONICS",22.5, 1000);
+        mainShop.addNewCoat("Duffle Coat", 980.54, seller1, 4, "CLOTHES", 34, 2);
+        mainShop.addNewBook("One Hundred Years of Solitude", 100, seller1, 10, "BOOKS", "Gabriel Garcia Marquez", 1967, "978-600-94421-1-9");
+        mainShop.addNewHummer("Mini claw hand tool hummer", 550, seller1, 8, "TOOLS", "iron", 450);
+        mainShop.addNewSeat("Office Chair", 2000000, seller1, 50, "FURNITURE", "steal", "leather");
+        mainShop.addNewRing("engagement ring", 5000000, seller1, 7, "JEWEL", 3, "gold");
+        mainShop.addNewPot("kitchen pot", 400000, seller1, 10, "KITCHEN_UTENSILS", "cast iron", 4.5);
+        mainShop.addNewCar("mazda3", 1000000000, seller1, 3, "VEHICLE", "mazda", "automatic", "white", 5, 4);
+        mainShop.addNewPen("wave Rollerball pen", 5000, seller1, 100, "STATIONERY", "Canco", 0.7, "Blue");
+        mainShop.addNewPuzzle("jigsaw puzzle", 100000, seller1, 50, "TOYS", 1000);
 
         startMenu();
     }
