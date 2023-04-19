@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class Main {
     private static Shop mainShop = new Shop("OnlineShop", "www.OnlineShop.ir","+989121234455");
     private static Scanner in;
+    private static JFileChooser fileChooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
     public static void main(String[] args){
         in = new Scanner(System.in);
@@ -59,7 +60,7 @@ public class Main {
                 default:
                     System.out.println("Enter a number in range 1 - 3 ");
                     startMenu();
-        }
+            }
         } catch (Exception e) {
             in.nextLine();
             System.out.println("You just entered wrong entry. Please try again.");
@@ -352,15 +353,14 @@ public class Main {
 
     // body of this method is copied from https://www.geeksforgeeks.org/java-swing-jfilechooser/
     private static String getProfilePhoto(){
-        JFileChooser j = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
 
         // invoke the showsOpenDialog function to show the save dialog
-        int r = j.showOpenDialog(null);
+        int r = fileChooser.showOpenDialog(null);
 
         // if the user selects a file
         if (r == JFileChooser.APPROVE_OPTION) {
             // set the label to the path of the selected file
-            String pathOfProfilePhoto = j.getSelectedFile().getAbsolutePath();
+            String pathOfProfilePhoto = fileChooser.getSelectedFile().getAbsolutePath();
             return pathOfProfilePhoto;
         } else { return null; }
     }
